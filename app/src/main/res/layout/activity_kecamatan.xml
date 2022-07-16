@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="#FFF9C4"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".KecamatanActivity"
+    tools:showIn="@layout/app_bar_kecamatan">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.synnapps.carouselview.CarouselView
+                android:id="@+id/carouselView"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                app:fillColor="#FFFFFFFF"
+                app:pageColor="#00000000"
+                app:radius="4dp"
+                app:slideInterval="3000"
+                app:strokeColor="#FF777777"
+                app:strokeWidth="1dp">
+            </com.synnapps.carouselview.CarouselView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:background="#FFFFFF">
+
+                <com.uncopt.android.widget.text.justify.JustifiedTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="2dp"
+                    android:elegantTextHeight="true"
+                    android:text="Desa Mekar Baru secara geografis terletak diantara koordinat -6 069075 Bujur Timur dan 106 390711 Lintang Selatan, dengan Wilayah seluas 238.884 Ha. Wilayah ini berbatasan dengan Desa Kelutuk disebelah selatan berbatasan dengan Desa Kosambi Dalam dan Desa Sidoko Kecamatan Gunung Kaler, wilayah Desa Mekar Baru sebelah barat di lewati sungai Cijeruk sebagai sumber irigrasi bagi lahan pertanian dan kebutuhan lain oleh masyarakat."/>
+
+                <com.uncopt.android.widget.text.justify.JustifiedTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:lineSpacingExtra="2dp"
+                    android:elegantTextHeight="true"
+                    android:text="Secara administratif wilayah Mekar Baru terbagi menjadi 4 wilayah kejaron/kampung dengan 4 RW dan 14 RT yaitu: Kampung Mekar Baru, Kampung Sura, Kampung Tipar, Kampung Merapit, Kampung Cibareng. Untuk mejalankan roda pemerintahan Desa Mekar Baru didukung oleh 11 orang 1 Pegawai Negri Sipil (PNS) dan 10 non PNS dengan tingkat pendidikan 55% lulusan S1 di ikuti 30% SLTA dan 15 SLTP"/>
+
+                <com.uncopt.android.widget.text.justify.JustifiedTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:lineSpacingExtra="2dp"
+                    android:elegantTextHeight="true"
+                    android:text="Penduduk merupakan suatu aset yang harus
+ditingkatkan kualitas dan kopetensinya 4 tahun terakhir dari
+tahun 2019 sampai tahun 2021 jumlah penduduk Desa Mekar
+Baru meningkat 1.90 % dengan ratio (perbandingan jumlah
+penduduk laki-laki dan jumlah penduduk perempuan) 120
+tahun 2019 dan 140 pada tahun 2021. Hal ini menunjukan
+pada tahun 2019 hingga 2021 secara rata-rata berkembang
+jumlah penduduk perempuan lebih cepat dibandingkan
+perkembangan penduduk laki-laki."/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

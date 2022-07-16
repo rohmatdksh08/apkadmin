@@ -1,0 +1,85 @@
+{
+  "project_info": {
+    "project_number": "775306464838",
+    "firebase_url": "https://e-complaint-rangkasbitung.firebaseio.com",
+    "project_id": "e-complaint-rangkasbitung",
+    "storage_bucket": "e-complaint-rangkasbitung.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:775306464838:android:bc098d97d24601d73fc447",
+        "android_client_info": {
+          "package_name": "com.jatmika.admin_e_complaintrangkasbitung"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "775306464838-17ci2ok0ekaqe5siq3l74271kb9itf6m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jatmika.admin_e_complaintrangkasbitung",
+            "certificate_hash": "ca5d871d89f35d8afcced006e81547d412fe04ca"
+          }
+        },
+        {
+          "client_id": "775306464838-237k8anv0g730qs3lmrvgtk437uflftu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBt_4n8weHY7bXuh2dv66hjawiSruJdRyg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "775306464838-237k8anv0g730qs3lmrvgtk437uflftu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:775306464838:android:336cec97729f04b63fc447",
+        "android_client_info": {
+          "package_name": "com.jatmika.e_complaintrangkasbitung"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "775306464838-vs8brjj0ovphh52hsg20f4vi8mldol40.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jatmika.e_complaintrangkasbitung",
+            "certificate_hash": "ca5d871d89f35d8afcced006e81547d412fe04ca"
+          }
+        },
+        {
+          "client_id": "775306464838-237k8anv0g730qs3lmrvgtk437uflftu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBt_4n8weHY7bXuh2dv66hjawiSruJdRyg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "775306464838-237k8anv0g730qs3lmrvgtk437uflftu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back_detail"
+    tools:context=".DeveloperActivity"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/app_bar_developer">
+
+    <RelativeLayout
+        android:id="@+id/relative1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="110dp"
+        android:background="@drawable/rounded_corner"
+        android:elevation="4dp"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                fontPath="fonts/OneStrokeScript.ttf"
+                tools:ignore="MissingPrefix"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Abdul Mutholib"
+                android:textSize="20sp"/>
+
+            <View
+                android:layout_width="220dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/colorPrimary"
+                android:layout_gravity="center"/>
+
+            <View
+                android:layout_width="160dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/colorPrimary"
+                android:layout_gravity="center"/>
+
+            <TableLayout
+                android:id="@+id/tabel1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <TableRow
+                    android:id="@+id/row_fb"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/border"
+                    android:padding="8dp"
+                    android:clickable="true">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="25dp"
+                        android:padding="2dp"
+                        android:background="@drawable/sosmed_facebook"/>
+                    <TextView
+                        android:id="@+id/tv_facebook"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_gravity="start|center"
+                        android:text="Abdul Mutholib Hsj"/>
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/row_ig"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/border"
+                    android:padding="8dp"
+                    android:clickable="true">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="25dp"
+                        android:padding="2dp"
+                        android:background="@drawable/sosmed_instagram"/>
+                    <TextView
+                        android:id="@+id/tv_ig"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:layout_gravity="start|center"
+                        android:text=" @abdul_dongkers"/>
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/border"
+                    android:padding="8dp">
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:padding="2dp"
+                        android:background="@drawable/sosmed_email"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_gravity="start|center"
+                        android:text="adoel1928@gmail.com"/>
+                </TableRow>
+
+            </TableLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/background_profile"
+        android:elevation="4dp"
+        android:src="@drawable/my_profile"/>
+
+</RelativeLayout>

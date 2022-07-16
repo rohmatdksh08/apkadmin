@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_persentase"
+            android:icon="@drawable/ic_persentase"
+            android:title="Persentase Komplain" />
+        <item
+            android:id="@+id/nav_kecamatan"
+            android:icon="@drawable/ic_location"
+            android:title="Desa Mekar Baru" />
+        <item
+            android:id="@+id/nav_developer"
+            android:icon="@drawable/ic_school"
+            android:title="Tentang Developer" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_power"
+            android:title="Logout" />
+    </group>
+
+</menu>
