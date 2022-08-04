@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Abdul Mutholib"
+                android:text="Rohmatullah"
                 android:textSize="20sp"/>
 
             <View
@@ -73,7 +73,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_gravity="start|center"
-                        android:text="Abdul Mutholib Hsj"/>
+                        android:text="Rohmatullah"/>
                 </TableRow>
 
                 <TableRow
@@ -93,7 +93,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
                         android:layout_gravity="start|center"
-                        android:text=" @abdul_dongkers"/>
+                        android:text=" @Rohmatdksh"/>
                 </TableRow>
 
                 <TableRow
@@ -110,7 +110,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_gravity="start|center"
-                        android:text="adoel1928@gmail.com"/>
+                        android:text="rohmatullah_08@icloud.com"/>
                 </TableRow>
 
             </TableLayout>
@@ -125,6 +125,6 @@
         android:layout_marginTop="30dp"
         android:background="@drawable/background_profile"
         android:elevation="4dp"
-        android:src="@drawable/my_profile"/>
+        android:src="@drawable/my_profile" />
 
 </RelativeLayout>

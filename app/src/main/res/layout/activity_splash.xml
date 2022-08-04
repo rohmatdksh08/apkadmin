@@ -16,8 +16,8 @@
             android:id="@+id/imageTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/splashtitle"
-            android:adjustViewBounds="true"/>
+            android:adjustViewBounds="true"
+            android:src="@drawable/splashtitle" />
     </RelativeLayout>
 
     <ProgressBar

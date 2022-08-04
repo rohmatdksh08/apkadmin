@@ -23,11 +23,11 @@
             android:visibility="gone"/>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:id="@+id/mRecyclerView" />
+            android:layout_marginBottom="5dp" />
 
         <View
             android:layout_width="match_parent"

@@ -24,17 +24,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="MKB App"
+        android:text="Admin E-Complaint"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textStyle="bold"
         android:textColor="#FFFFFF"/>
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:layout_width="131dp"
         android:layout_height="wrap_content"
-        android:text="Desa Mekar Baru"
+        android:text="Desa Rancabango"
         android:textColor="#FFFFFF"
-        android:textStyle="italic"/>
+        android:textStyle="italic" />
 
 </LinearLayout>

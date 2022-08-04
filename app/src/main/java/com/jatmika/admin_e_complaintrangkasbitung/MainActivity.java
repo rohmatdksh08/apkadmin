@@ -165,7 +165,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_kecamatan) {
             startActivity(new Intent(MainActivity.this, KecamatanActivity.class));
-
+        } else if (id ==R.id.tbh_penduduk) {
+            startActivity(new Intent(MainActivity.this, PendudukActivity.class));
         } else if (id == R.id.nav_developer) {
             startActivity(new Intent(MainActivity.this, DeveloperActivity.class));
 
