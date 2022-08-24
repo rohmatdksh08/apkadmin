@@ -68,7 +68,7 @@ public class PersentaseKomplainActivity extends AppCompatActivity {
                 mPieChart.setVisibility(View.VISIBLE);
                 mPieChart.animateXY(3000, 3000);
 
-                PieDataSet pieDataSet = new PieDataSet(pieEntries, "MKB App");
+                PieDataSet pieDataSet = new PieDataSet(pieEntries, "E-Complaint");
                 pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
                 pieDataSet.setValueTextColor(Color.WHITE);
                 pieDataSet.setValueTextSize(12);
@@ -78,7 +78,7 @@ public class PersentaseKomplainActivity extends AppCompatActivity {
                 mPieChart.setData(pieData);
 
                 Description description = new Description();
-                description.setText("Persentase Pengiriman Komplain Masyarakat Desa Mekar Baru");
+                description.setText("Persentase Pengiriman Komplain Masyarakat Desa Rancabango");
                 mPieChart.setDescription(description);
                 mPieChart.invalidate();
             }

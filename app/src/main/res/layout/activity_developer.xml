@@ -14,8 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:layout_marginTop="110dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/rounded_corner"
         android:elevation="4dp"
         android:padding="20dp">
@@ -29,26 +29,26 @@
 
             <TextView
                 fontPath="fonts/OneStrokeScript.ttf"
-                tools:ignore="MissingPrefix"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Rohmatullah"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                tools:ignore="MissingPrefix" />
 
             <View
                 android:layout_width="220dp"
                 android:layout_height="2dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="2dp"
-                android:background="@color/colorPrimary"
-                android:layout_gravity="center"/>
+                android:background="@color/colorPrimary" />
 
             <View
                 android:layout_width="160dp"
                 android:layout_height="2dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="4dp"
-                android:background="@color/colorPrimary"
-                android:layout_gravity="center"/>
+                android:background="@color/colorPrimary" />
 
             <TableLayout
                 android:id="@+id/tabel1"
@@ -60,57 +60,63 @@
                     android:id="@+id/row_fb"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/border"
-                    android:padding="8dp"
-                    android:clickable="true">
+                    android:clickable="true"
+                    android:padding="8dp">
+
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="25dp"
-                        android:padding="2dp"
-                        android:background="@drawable/sosmed_facebook"/>
+                        android:background="@drawable/sosmed_facebook"
+                        android:padding="2dp" />
+
                     <TextView
                         android:id="@+id/tv_facebook"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
                         android:layout_gravity="start|center"
-                        android:text="Rohmatullah"/>
+                        android:layout_marginStart="10dp"
+                        android:text="Rohmatullah" />
                 </TableRow>
 
                 <TableRow
                     android:id="@+id/row_ig"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/border"
-                    android:padding="8dp"
-                    android:clickable="true">
+                    android:clickable="true"
+                    android:padding="8dp">
+
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="25dp"
-                        android:padding="2dp"
-                        android:background="@drawable/sosmed_instagram"/>
+                        android:background="@drawable/sosmed_instagram"
+                        android:padding="2dp" />
+
                     <TextView
                         android:id="@+id/tv_ig"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
                         android:layout_gravity="start|center"
-                        android:text=" @Rohmatdksh"/>
+                        android:layout_marginStart="7dp"
+                        android:text=" @Rohmatdksh" />
                 </TableRow>
 
                 <TableRow
                     android:layout_marginTop="10dp"
                     android:background="@drawable/border"
                     android:padding="8dp">
+
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:padding="2dp"
-                        android:background="@drawable/sosmed_email"/>
+                        android:background="@drawable/sosmed_email"
+                        android:padding="2dp" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
                         android:layout_gravity="start|center"
-                        android:text="rohmatullah_08@icloud.com"/>
+                        android:layout_marginStart="10dp"
+                        android:text="rohmatullah_08@icloud.com" />
                 </TableRow>
 
             </TableLayout>

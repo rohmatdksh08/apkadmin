@@ -34,7 +34,7 @@
         <activity
             android:name=".PendudukActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar2" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".DetailDataUserActivity"
             android:screenOrientation="portrait"
@@ -45,6 +45,10 @@
             android:theme="@style/AppTheme.NoActionBar2" />
         <activity
             android:name=".LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".InputPendudukActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

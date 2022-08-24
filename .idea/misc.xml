@@ -8,6 +8,7 @@
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/drawable/ic_email.xml" value="0.2265" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/drawable/ic_forum_black_24dp.xml" value="0.2265" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/drawable/ic_lihat.xml" value="0.2265" />
+        <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/drawable/ic_persentase.xml" value="0.2065" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/drawable/rounded_uploadberita.xml" value="0.2265" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/drawable/state_list.xml" value="0.2265" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/drawable/status_menunggu.xml" value="0.2265" />
@@ -16,32 +17,40 @@
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/activity_detail_berita.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/activity_detail_data_user.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/activity_detail_infrastruktur.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/activity_detail_iumk.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/activity_detail_kependudukan.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/activity_detail_ktp.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/activity_detail_nikah.xml" value="0.2" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/activity_detail_tutup_jalan.xml" value="0.264" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/activity_developer.xml" value="0.22826086956521738" />
-        <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/activity_kecamatan.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/activity_input_penduduk.xml" value="0.2" />
+        <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/activity_kecamatan.xml" value="0.1" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/activity_persentase_komplain.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/activity_splash.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/activity_tambah_berita.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/activity_ubah_status.xml" value="0.22826086956521738" />
-        <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/app_bar_data_penduduk.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/app_bar_data_penduduk.xml" value="0.176" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/app_bar_detail_berita.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/app_bar_detail_data_user.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/app_bar_detail_infrastruktur.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/app_bar_detail_iumk.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/app_bar_detail_kependudukan.xml" value="0.264" />
+        <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/app_bar_detail_ktp.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/app_bar_detail_nikah.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/app_bar_detail_sppt.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/app_bar_detail_tutup_jalan.xml" value="0.25" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/app_bar_developer.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/app_bar_input_penduduk.xml" value="0.23007246376811594" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/app_bar_kecamatan.xml" value="0.264" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/app_bar_main.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/app_bar_persentase.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/app_bar_status.xml" value="0.25" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/app_bar_tambah_berita.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/content_main.xml" value="0.22826086956521738" />
-        <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/data_penduduk.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/data_penduduk.xml" value="0.2" />
+        <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/fragment_berita.xml" value="0.16" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/fragment_data_user.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/fragment_infrastruktur.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/fragment_kependudukan.xml" value="0.22826086956521738" />
@@ -49,6 +58,7 @@
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/fragment_map.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/fragment_nikah.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/fragment_sppt.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/fragment_tbhpenduduk.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/fragment_tutup_jalan.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/item_berita.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/layout/item_data_user.xml" value="0.2" />

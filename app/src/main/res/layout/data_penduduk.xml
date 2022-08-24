@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
+    tools:showIn="@layout/app_bar_data_penduduk"
+    tools:context=".PendudukActivity"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        app:cardElevation="4dp"
-        app:cardCornerRadius="7dp">
+        android:layout_marginRight="5dp"
+        app:cardCornerRadius="7dp"
+        app:cardElevation="4dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
@@ -26,18 +27,18 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/fotoImageView"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginEnd="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:scaleType="centerCrop"
+                    android:layout_marginEnd="5dp"
                     android:adjustViewBounds="true"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_launcher" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -55,15 +56,6 @@
                             android:layout_height="wrap_content">
 
                             <TableRow>
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="5dp"
-                                    android:layout_marginTop="5dp"
-                                    android:gravity="start|center"
-                                    android:textColor="@android:color/black"
-                                    android:text="Nama"
-                                    android:textSize="11sp"/>
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -71,9 +63,9 @@
                                     android:layout_marginStart="5dp"
                                     android:layout_marginTop="5dp"
                                     android:gravity="start|center"
+                                    android:text="Nama"
                                     android:textColor="@android:color/black"
-                                    android:text=":"
-                                    android:textSize="11sp"/>
+                                    android:textSize="11sp" />
 
                                 <TextView
                                     android:id="@+id/namaTextView"
@@ -84,21 +76,22 @@
                                     android:ellipsize="end"
                                     android:gravity="start|center"
                                     android:singleLine="true"
-                                    android:text="Rohmat"
+                                    android:text=": Rohmat"
                                     android:textColor="#5117B6"
                                     android:textSize="11sp" />
                             </TableRow>
 
                             <TableRow>
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="5dp"
                                     android:layout_marginTop="3dp"
                                     android:gravity="start|center"
-                                    android:textColor="@android:color/black"
                                     android:text="Lahir"
-                                    android:textSize="11sp"/>
+                                    android:textColor="@android:color/black"
+                                    android:textSize="11sp" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -106,34 +99,23 @@
                                     android:layout_marginStart="5dp"
                                     android:layout_marginTop="3dp"
                                     android:gravity="start|center"
-                                    android:textColor="@android:color/black"
                                     android:text=":"
-                                    android:textSize="11sp"/>
-
-                                <TextView
-                                    android:id="@+id/lahirTextView"
-                                    android:layout_width="180dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="5dp"
-                                    android:layout_marginTop="3dp"
-                                    android:ellipsize="end"
-                                    android:gravity="start|center"
-                                    android:singleLine="true"
-                                    android:text="28 Maret 2000"
-                                    android:textColor="#5117B6"
+                                    android:textColor="@android:color/black"
                                     android:textSize="11sp" />
+
                             </TableRow>
 
                             <TableRow>
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="5dp"
                                     android:layout_marginTop="3dp"
                                     android:gravity="start|center"
-                                    android:textColor="@android:color/black"
                                     android:text="Alamat"
-                                    android:textSize="11sp"/>
+                                    android:textColor="@android:color/black"
+                                    android:textSize="11sp" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -141,27 +123,38 @@
                                     android:layout_marginStart="5dp"
                                     android:layout_marginTop="3dp"
                                     android:gravity="start|center"
-                                    android:textColor="@android:color/black"
                                     android:text=":"
-                                    android:textSize="11sp"/>
-
-                                <TextView
-                                    android:id="@+id/alamatTextView"
-                                    android:layout_width="180dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="5dp"
-                                    android:layout_marginTop="3dp"
-                                    android:gravity="start|center"
-                                    android:text="Tangerang"
-                                    android:textColor="#5117B6"
+                                    android:textColor="@android:color/black"
                                     android:textSize="11sp" />
+
                             </TableRow>
                         </TableLayout>
                     </LinearLayout>
                 </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="start|center"
+                    android:text=":"
+                    android:textColor="@android:color/black"
+                    android:textSize="11sp" />
             </LinearLayout>
+
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-</LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_data_penduduk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/colorPrimary" />
+
+</RelativeLayout>

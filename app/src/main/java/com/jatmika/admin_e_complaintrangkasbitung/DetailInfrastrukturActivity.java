@@ -105,7 +105,7 @@ public class DetailInfrastrukturActivity extends AppCompatActivity {
         isiDetailTextView = findViewById(R.id.isiTextView);
         statusDetailtextView = findViewById(R.id.statusTextView);
         fotoDetailImageView = findViewById(R.id.fotoDetailImageView);
-        contentFrame = findViewById(R.id.content_frame);
+        contentFrame = findViewById (R.id.content_frame);
         relative1 = findViewById(R.id.relative1);
         btnTambahKomentar = findViewById(R.id.btnTambahKomentar);
         linear2 = findViewById(R.id.linear2);
