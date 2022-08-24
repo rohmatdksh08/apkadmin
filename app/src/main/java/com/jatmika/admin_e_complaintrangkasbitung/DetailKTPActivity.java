@@ -185,7 +185,7 @@ public class DetailKTPActivity extends AppCompatActivity {
                 TextView btnClose = mView.findViewById(R.id.btnClose);
 
                 Glide.with(DetailKTPActivity.this)
-                        .load(image)
+                        .load(urlImage)
                         .into(imageView);
 
                 mBuilder.setView(mView);
