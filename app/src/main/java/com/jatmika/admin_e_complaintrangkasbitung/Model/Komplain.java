@@ -1,8 +1,8 @@
 package com.jatmika.admin_e_complaintrangkasbitung.Model;
 
 public class Komplain {
-    private String foto, berkas, nomor, nik, email, nama, alamat, tanggal, namalokasi, isi, kategori, status,
-            jml_lihat, jml_suka, jml_balas, key;
+    private String foto, berkas, no_komplain, nik, email, nama, alamat, tanggal, namalokasi, isi, kategori, status,
+            jml_lihat, jml_suka, jml_balas, id_komplain;
     private Double latitude;
     private Double longitude;
     private int position;
@@ -15,12 +15,12 @@ public class Komplain {
         this.position = position;
     }
 
-    public Komplain(String foto, String berkas, String nomor, String nik, String email, String nama, String alamat, String tanggal,
+    public Komplain(String foto, String berkas, String no_komplain, String nik, String email, String nama, String alamat, String tanggal,
                     String namalokasi, Double latitude, Double longitude, String isi, String kategori, String status, String jml_lihat,
                     String jml_suka, String jml_balas) {
         this.foto = foto;
         this.berkas = berkas;
-        this.nomor = nomor;
+        this.no_komplain = no_komplain;
         this.nik = nik;
         this.email = email;
         this.nama = nama;
@@ -52,10 +52,10 @@ public class Komplain {
     }
 
     public String getNomor() {
-        return nomor;
+        return no_komplain;
     }
     public void setNomor(String nomor) {
-        this.nomor = nomor;
+        this.no_komplain = nomor;
     }
 
     public String getNik() {
@@ -157,9 +157,9 @@ public class Komplain {
     }
 
     public String getKey() {
-        return key;
+        return id_komplain;
     }
     public void setKey(String key) {
-        this.key = key;
+        this.id_komplain = key;
     }
 }

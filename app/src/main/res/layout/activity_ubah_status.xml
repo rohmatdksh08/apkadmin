@@ -21,44 +21,6 @@
             android:layout_below="@+id/btnClose"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/relativeLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_uploadberita"
-                android:padding="1dp">
-
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/placeholder3" />
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF"
-                android:gravity="center"
-                android:padding="3dp"
-                android:text="Upload Photo Jika Diperlukan"
-                android:textSize="10sp" />
-
-            <Button
-                android:id="@+id/chooseBtn"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="5dp"
-                android:drawableStart="@drawable/ic_menu_camera_white"
-                android:background="@drawable/rounded_button4"
-                android:text="Ambil Foto"
-                android:textColor="#ffffff"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
             <EditText
                 android:id="@+id/edPesan"
                 android:layout_width="match_parent"

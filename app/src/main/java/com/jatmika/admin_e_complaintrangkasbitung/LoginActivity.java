@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
@@ -30,17 +31,25 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jatmika.admin_e_complaintrangkasbitung.API.API;
+import com.jatmika.admin_e_complaintrangkasbitung.API.APIUtility;
 import com.jatmika.admin_e_complaintrangkasbitung.Model.Admin;
+import com.jatmika.admin_e_complaintrangkasbitung.Model.TokenApi;
+import com.jatmika.admin_e_complaintrangkasbitung.SharePref.SharePref;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
     EditText edUsername, edPass;
     ImageView btnShow;
     Button btnLogin;
-    DatabaseReference databaseReference;
-    FirebaseAuth auth;
     String show = "SHOW";
     String username, password;
+    private API apiService;
+    private SharePref sharePref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +57,14 @@ public class LoginActivity extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
+        apiService = APIUtility.getAPI();
+        sharePref = new SharePref(this);
 
-        auth = FirebaseAuth.getInstance();
-
-        if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+        if(sharePref.getStatusLogin() == true) {
             Intent a = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(a);
         }
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("data_admin");
 
         edUsername = findViewById(R.id.edUsername);
         edPass = findViewById(R.id.edPass);
@@ -113,21 +121,30 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                auth.signInWithEmailAndPassword(username+"@gmail.com", password)
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(!task.isSuccessful()){
-                                    Toast.makeText(LoginActivity.this, "Login gagal, harap mencoba kembali!", Toast.LENGTH_SHORT).show();
-                                    mDialog.dismiss();
+                apiService.login(username, password, "android").enqueue(new Callback<TokenApi>() {
+                    @Override
+                    public void onResponse(Call<TokenApi> call, Response<TokenApi> response) {
+                        mDialog.dismiss();
+                        if(response.body().getCode() == 404){
+                            Toast.makeText(LoginActivity.this, "Akun tidak ditemukan", Toast.LENGTH_SHORT).show();
 
-                                } else {
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                    mDialog.dismiss();
-                                    finish();
-                                }
-                            }
-                        });
+                        }
+
+                        if (response.body().getCode() == 200){
+                            Log.i("token", response.body().getAccessToken());
+                            sharePref.setStatusLogin(true);
+                            sharePref.setTokenApi(response.body().getAccessToken());
+                            Intent dashboard = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(dashboard);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<TokenApi> call, Throwable t) {
+                        Log.i("errorResponse", t.toString());
+                    }
+                });
+
             }
         });
     }

@@ -5,15 +5,15 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class Komentar {
 
-    private String komentarText;
-    private String komentarUser;
-    private String komentarEmail;
-    private String key;
+    private String balasan;
+    private String nama;
+    private String email;
+    private String id_balasan;
 
-    public Komentar(String komentarText, String komentarUser, String komentarEmail) {
-        this.komentarText = komentarText;
-        this.komentarUser = komentarUser;
-        this.komentarEmail = komentarEmail;
+    public Komentar(String balasan, String nama, String email) {
+        this.balasan = balasan;
+        this.nama = nama;
+        this.email = email;
     }
 
     public Komentar() {
@@ -21,31 +21,31 @@ public class Komentar {
     }
 
     public String getKey(){
-        return key;
+        return id_balasan;
     }
     public void setKey(String key){
-        this.key = key;
+        this.id_balasan = key;
     }
 
     public String getKomentarText() {
-        return komentarText;
+        return balasan;
     }
     public void setKomentarText(String komentarText) {
-        this.komentarText = komentarText;
+        this.balasan = komentarText;
     }
 
     public String getKomentarUser() {
-        return komentarUser;
+        return nama;
     }
     public void setKomentarUser(String komentarUser) {
-        this.komentarUser = komentarUser;
+        this.nama = komentarUser;
     }
 
     public String getKomentarEmail() {
-        return komentarEmail;
+        return email;
     }
     public void setKomentarEmail(String komentarEmail) {
-        this.komentarEmail = komentarEmail;
+        this.email = komentarEmail;
     }
 
 }

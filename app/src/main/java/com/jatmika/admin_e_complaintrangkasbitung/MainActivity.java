@@ -15,6 +15,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.jatmika.admin_e_complaintrangkasbitung.SharePref.SharePref;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private static final String TAG = "mFirebaseIIDService";
     private static String SUBSCRIBE_TO;
+    private SharePref sharePref;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -76,8 +78,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
-
-        if(FirebaseAuth.getInstance().getCurrentUser() == null) {
+        sharePref = new SharePref(this);
+        Log.i("status_login", ""+sharePref.getStatusLogin()+"");
+        if(sharePref.getStatusLogin() == false) {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
         }
 

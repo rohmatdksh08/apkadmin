@@ -4,7 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import okhttp3.ResponseBody;
 import pl.aprilapps.easyphotopicker.EasyImage;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +18,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -36,7 +42,11 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.jatmika.admin_e_complaintrangkasbitung.API.API;
+import com.jatmika.admin_e_complaintrangkasbitung.API.APIUtility;
+import com.jatmika.admin_e_complaintrangkasbitung.Model.Komentar;
 import com.jatmika.admin_e_complaintrangkasbitung.Model.Proses;
+import com.jatmika.admin_e_complaintrangkasbitung.SharePref.SharePref;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -54,6 +64,8 @@ public class UbahStatusActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_CAMERA = 001;
     private static final int PICK_IMAGE_GALLERY = 002;
+    private SharePref sharePref;
+    private API apiService;
 
     private Uri mImageUri;
     private StorageReference mStorageRef;
@@ -65,6 +77,8 @@ public class UbahStatusActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_bar_status);
+        sharePref = new SharePref(this);
+        apiService = APIUtility.getAPI();
 
         final String proseStatus = getIntent().getExtras().getString("prosesStatus");
         final String status = getIntent().getExtras().getString("status");
@@ -77,8 +91,6 @@ public class UbahStatusActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btnBack);
         edPesan = findViewById(R.id.edPesan);
         edOleh = findViewById(R.id.edOleh);
-        imageView = findViewById(R.id.imageView);
-        chooseBtn = findViewById(R.id.chooseBtn);
         sendbtn = findViewById(R.id.sendBtn);
 
         if (proseStatus.equals("Dalam Proses")){
@@ -94,41 +106,44 @@ public class UbahStatusActivity extends AppCompatActivity {
         mStorageRef = FirebaseStorage.getInstance().getReference("foto_status");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("data_komplain").child(getKey).child("status_komplain");
 
-        chooseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openFileChooser();
-            }
-        });
 
         sendbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadFile();
+                if (isEmpty(edPesan.getText().toString()) || isEmpty(edOleh.getText().toString())) {
+                    Toast.makeText(UbahStatusActivity.this, "Data tidak boleh kosong!", Toast.LENGTH_SHORT).show();
+                }else{
+                    AlertDialog.Builder mBuilder = new AlertDialog.Builder(UbahStatusActivity.this);
+                    View mView = getLayoutInflater().inflate(R.layout.show_loading, null);
+
+                    mBuilder.setView(mView);
+                    mBuilder.setCancelable(false);
+                    final AlertDialog mDialog = mBuilder.create();
+                    mDialog.show();
+                    apiService.updateStatusComplain("Bearer "+sharePref.getTokenApi(), getKey, edOleh.getText().toString(), edPesan.getText().toString(), proseStatus).enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if (response.code() == 200){
+                                Toast.makeText(UbahStatusActivity.this, "Status komplain berhasil diubah!", Toast.LENGTH_LONG).show();
+                                mDialog.dismiss();
+                                finish();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            Log.i("responseErrpr", t.toString());
+
+                        }
+                    });
+                }
+
+
             }
         });
     }
 
-    private void openFileChooser() {
-        CharSequence[] item = {"Kamera", "Galeri"};
-        AlertDialog.Builder request = new AlertDialog.Builder(UbahStatusActivity.this)
-                .setTitle("Tambah Foto")
-                .setItems(item, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int i) {
-                        switch (i){
-                            case 0:
-                                EasyImage.openCamera(UbahStatusActivity.this, PICK_IMAGE_CAMERA);
-                                break;
-                            case 1:
-                                EasyImage.openGallery(UbahStatusActivity.this, PICK_IMAGE_GALLERY);
-                                break;
-                        }
-                    }
-                });
-        request.create();
-        request.show();
-    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

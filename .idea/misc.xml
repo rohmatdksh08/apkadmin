@@ -63,6 +63,8 @@
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/menu/main.xml" value="0.25" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/menu/navigation.xml" value="0.25" />
         <entry key="..\:/Users/Rohmat/Documents/Skirpsi/MKB App - Admin/MKB App - Admin/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2265" />
+        <entry key="app/src/main/res/layout/activity_ubah_status.xml" value="0.1" />
+        <entry key="app/src/main/res/xml/network_security_config.xml" value="0.1" />
       </map>
     </option>
   </component>
