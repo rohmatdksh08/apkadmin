@@ -54,16 +54,9 @@ public class InputPendudukActivity extends AppCompatActivity {
     TextView tvJudul;
     Animation fromright;
 
-    ImageView photo, chooseBtn, btnShow;
-    EditText edNik, edEmail, edPass, edNama, edTTL, edAlamat, edNohp;
+    EditText edNik,edNama,edTlahir, edTTL, edAlamat;
     RadioButton radioPria, radioWanita;
     Button btnDaftar;
-
-    Uri mImageUri;
-    StorageReference mStorageRef;
-    DatabaseReference mDatabaseRef;
-    StorageTask mUploadTask;
-    FirebaseAuth auth;
 
     private static final int PICK_IMAGE_REQUEST = 1;
     Calendar myCalendar;
@@ -82,18 +75,14 @@ public class InputPendudukActivity extends AppCompatActivity {
 
         btnBack = findViewById(R.id.btnBack);
         tvJudul = findViewById(R.id.tvJudul);
-        photo = findViewById(R.id.photo);
-        chooseBtn = findViewById(R.id.chooseBtn);
         edNik = findViewById(R.id.edNIK);
-        edEmail = findViewById(R.id.edEmail);
-        edPass = findViewById(R.id.edPass);
         edNama = findViewById(R.id.edNama);
+        edTlahir = findViewById(R.id.edTlahir);
         edTTL = findViewById(R.id.edTTL);
         radioPria = findViewById(R.id.radioPria);
         radioWanita = findViewById(R.id.radioWanita);
         edAlamat = findViewById(R.id.edAlamat);
-        edNohp = findViewById(R.id.edNohp);
-        btnShow = findViewById(R.id.ic_toggle);
+
         btnDaftar = findViewById(R.id.btnDaftar);
 
         fromright = AnimationUtils.loadAnimation(this, R.anim.fromright);
@@ -115,27 +104,6 @@ public class InputPendudukActivity extends AppCompatActivity {
             }
         });
 
-        auth = FirebaseAuth.getInstance();
-        mStorageRef = FirebaseStorage.getInstance().getReference("foto_user");
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("data_user");
-
-        edPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-
-        btnShow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(show.equals("SHOW")) {
-                    show = "HIDE";
-                    edPass.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    edPass.setSelection(edPass.length());
-                } else {
-                    show = "SHOW";
-                    edPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    edPass.setSelection(edPass.length());
-                }
-            }
-
-        });
 
         myCalendar = Calendar.getInstance();
         date = new DatePickerDialog.OnDateSetListener() {
@@ -158,17 +126,12 @@ public class InputPendudukActivity extends AppCompatActivity {
             }
         });
 
-        chooseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openFileChooser();
-            }
-        });
+
 
         btnDaftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadFile();
+
             }
         });
 
@@ -186,121 +149,9 @@ public class InputPendudukActivity extends AppCompatActivity {
         edTTL.setText(sdf.format(myCalendar.getTime()));
     }
 
-    private void openFileChooser() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null) {
-            mImageUri = data.getData();
-
-            Glide.with(this).load(mImageUri).into(photo);
-        }
-    }
-
-    private String getFileExtension(Uri uri) {
-        ContentResolver cR = getContentResolver();
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-        return mime.getExtensionFromMimeType(cR.getType(uri));
-    }
-
-    private void uploadFile() {
-        String email = edEmail.getText().toString();
-        final String password = edPass.getText().toString();
-
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(com.jatmika.admin_e_complaintrangkasbitung.InputPendudukActivity.this);
-        View mView = getLayoutInflater().inflate(R.layout.show_loading, null);
-
-        mBuilder.setView(mView);
-        mBuilder.setCancelable(false);
-        final AlertDialog mDialog = mBuilder.create();
-        mDialog.show();
-
-        if (TextUtils.isEmpty(email)){
-            Toast.makeText(com.jatmika.admin_e_complaintrangkasbitung.InputPendudukActivity.this, "Email harus diisi!", Toast.LENGTH_SHORT).show();
-            mDialog.dismiss();
-
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            Toast.makeText(com.jatmika.admin_e_complaintrangkasbitung.InputPendudukActivity.this, "Email tidak valid!", Toast.LENGTH_SHORT).show();
-            mDialog.dismiss();
-
-        } else if (TextUtils.isEmpty(password)){
-            Toast.makeText(com.jatmika.admin_e_complaintrangkasbitung.InputPendudukActivity.this, "Password harus diisi!", Toast.LENGTH_SHORT).show();
-            mDialog.dismiss();
-
-        } else if (password.length() < 6){
-            Toast.makeText(com.jatmika.admin_e_complaintrangkasbitung.InputPendudukActivity.this, "Password minimal harus 6 karakter", Toast.LENGTH_SHORT).show();
-            mDialog.dismiss();
-
-        } else if (mImageUri == null){
-            Toast.makeText(com.jatmika.admin_e_complaintrangkasbitung.InputPendudukActivity.this, "Photo harus ditambahkan!", Toast.LENGTH_SHORT).show();
-            mDialog.dismiss();
-
-        } else if (isEmpty(edNama.getText().toString()) || isEmpty(edTTL.getText().toString())
-                || isEmpty(edAlamat.getText().toString()) || isEmpty(edNohp.getText().toString())){
-            Toast.makeText(this, "Data harus dilengkapi!", Toast.LENGTH_SHORT).show();
-            mDialog.dismiss();
-
-        } else if(mImageUri != null || !isEmpty(edNama.getText().toString()) || !isEmpty(edTTL.getText().toString())
-                || !isEmpty(edAlamat.getText().toString()) || !isEmpty(edNohp.getText().toString())){
-            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful()){
-                        final StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
-                                + "." + getFileExtension(mImageUri));
-
-                        mUploadTask = fileReference.putFile(mImageUri)
-                                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                        fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                            @Override
-                                            public void onSuccess(Uri uri) {
-                                                DataUser upload = new DataUser(uri.toString(), edNik.getText().toString(), edEmail.getText().toString(),
-                                                        edPass.getText().toString(), edNama.getText().toString(),
-                                                        edTTL.getText().toString(), jenkel, edAlamat.getText().toString(),
-                                                        edNohp.getText().toString());
-
-                                                String uploadId = mDatabaseRef.push().getKey();
-                                                mDatabaseRef.child(uploadId).setValue(upload).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        Toast.makeText(com.jatmika.admin_e_complaintrangkasbitung.InputPendudukActivity.this, "Berhasil daftar akun, silahkan login!", Toast.LENGTH_LONG).show();
-                                                        mDialog.dismiss();
-                                                        finish();
-                                                    }
-                                                });
-                                            }
-                                        });
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(com.jatmika.admin_e_complaintrangkasbitung.InputPendudukActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                                })
-                                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                                        double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                                    }
-                                });
-                    } else {
-                        Toast.makeText(com.jatmika.admin_e_complaintrangkasbitung.InputPendudukActivity.this, "Email telah terdaftar!", Toast.LENGTH_LONG).show();
-                        mDialog.dismiss();
-                    }
-                }
-            });
-
-        }
     }
 }
