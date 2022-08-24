@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DeveloperActivity">
+    tools:context=".PendudukActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -37,23 +37,21 @@
 
                 <TextView
                     android:id="@+id/tvJudul"
-                    fontPath="fonts/Berlin.TTF"
-                    tools:ignore="MissingPrefix"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
+                    android:gravity="start|center"
                     android:textStyle="bold"
-                    android:text="Tentang Developer"
+                    android:text="Data Penduduk"
                     android:textSize="22sp"
                     android:textColor="#FCFAFA"
                     android:singleLine="true"/>
 
             </LinearLayout>
-        </androidx.appcompat.widget.Toolbar>
 
+        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/data_penduduk"/>
+    <include layout="@layout/data_penduduk" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

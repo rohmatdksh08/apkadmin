@@ -14,8 +14,8 @@
             android:title="Desa Rancabango" />
         <item
             android:id="@+id/tbh_penduduk"
-            android:icon="@drawable/ic_location"
-            android:title="Tambah Penduduk" />
+            android:icon="@drawable/ic_people"
+            android:title="Data Penduduk" />
         <item
             android:id="@+id/nav_developer"
             android:icon="@drawable/ic_school"

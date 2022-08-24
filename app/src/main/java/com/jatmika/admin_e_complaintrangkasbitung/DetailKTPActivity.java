@@ -366,7 +366,7 @@ public class DetailKTPActivity extends AppCompatActivity {
             }
         });
 
-        fab.setOnClickListener(new View.OnClickListener() {
+         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final EditText input = findViewById(R.id.input);
@@ -388,9 +388,9 @@ public class DetailKTPActivity extends AppCompatActivity {
                 } else {
                     FirebaseDatabase.getInstance().getReference("data_komplain").child(getKey)
                             .child("balasan").push().setValue(new Komentar(input.getText().toString(),
-                            namaDetailTextView.getText().toString(), firebaseUser.getEmail())).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) { FirebaseDatabase.getInstance().getReference("data_komplain").child(getKey).child("balasan").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    "Admin", "")).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) { FirebaseDatabase.getInstance().getReference("data_komplain").child(getKey).child("balasan").addListenerForSingleValueEvent(new ValueEventListener()  {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.exists()) {

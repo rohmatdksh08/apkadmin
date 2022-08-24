@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UbahStatusActivity">
+    tools:context=".InputPendudukActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -27,10 +27,10 @@
                     android:id="@+id/btnBack"
                     android:layout_width="40dp"
                     android:layout_height="?attr/actionBarSize">
-
                     <ImageView
-                        android:layout_width="20dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:src="@drawable/back_arrow" />
                 </RelativeLayout>
@@ -42,16 +42,16 @@
                     android:layout_gravity="center"
                     android:gravity="start|center"
                     android:textStyle="bold"
-                    android:text="Status Komplain"
-                    android:textSize="20sp"
+                    android:text="Input Data Penduduk"
+                    android:textSize="22sp"
                     android:textColor="#FCFAFA"
                     android:singleLine="true"/>
 
             </LinearLayout>
-        </androidx.appcompat.widget.Toolbar>
 
+        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/activity_ubah_status" />
+    <include layout="@layout/activity_input_penduduk" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
