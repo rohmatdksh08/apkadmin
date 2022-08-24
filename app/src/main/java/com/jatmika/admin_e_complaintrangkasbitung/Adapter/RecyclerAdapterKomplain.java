@@ -46,6 +46,7 @@ public class RecyclerAdapterKomplain extends RecyclerView.Adapter<RecyclerAdapte
         holder.namaTextView.setText(currentKomplain.getNama());
         holder.isiTextView.setText("''" +currentKomplain.getIsi()+ "''");
         String status = holder.setText(currentKomplain.getStatus());
+        String urlImage = "http://192.168.216.94:8000/uploads/"+currentKomplain.getFoto();
         if (status.equals("Menunggu Diproses")){
             holder.imgStatus.setImageResource(R.drawable.status_menunggu);
             holder.statusTextView.setTextColor(mContext.getResources().getColor(R.color.greenColor));
@@ -73,7 +74,7 @@ public class RecyclerAdapterKomplain extends RecyclerView.Adapter<RecyclerAdapte
             holder.fotoImageView.setImageResource(R.drawable.placeholder3);
         } else {
             Glide.with(mContext)
-                    .load(currentKomplain.getFoto())
+                    .load(urlImage)
                     .into(holder.fotoImageView);
         }
     }
