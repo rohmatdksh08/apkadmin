@@ -64,6 +64,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     fragmentTransaction3.replace(R.id.content, dataUserFragment);
                     fragmentTransaction3.commit();
                     return true;
+                case R.id.navigation_penduduk:
+                    FragmentPenduduk dataPendudukFragment = new FragmentPenduduk();
+                    tvJudul.setText("Data Penduduk");
+                    FragmentTransaction fragmentTransaction4 = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction4.replace(R.id.content, dataPendudukFragment);
+                    fragmentTransaction4.commit();
+                    return true;
             }
             return false;
         }
@@ -168,8 +175,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_kecamatan) {
             startActivity(new Intent(MainActivity.this, KecamatanActivity.class));
-        } else if (id ==R.id.tbh_penduduk) {
-            startActivity(new Intent(MainActivity.this, PendudukActivity.class));
         } else if (id == R.id.nav_developer) {
             startActivity(new Intent(MainActivity.this, DeveloperActivity.class));
 

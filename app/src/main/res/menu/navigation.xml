@@ -15,5 +15,9 @@
         android:id="@+id/navigation_user"
         android:icon="@drawable/ic_people"
         android:title="Data User" />
+    <item
+        android:id="@+id/navigation_penduduk"
+        android:icon="@drawable/ic_people"
+        android:title="Data Penduduk" />
 
 </menu>

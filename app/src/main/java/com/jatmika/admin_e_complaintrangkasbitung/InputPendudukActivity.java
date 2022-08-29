@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.DatePickerDialog;
 import android.content.ContentResolver;
@@ -12,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.animation.Animation;
@@ -40,13 +42,21 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.jatmika.admin_e_complaintrangkasbitung.API.API;
+import com.jatmika.admin_e_complaintrangkasbitung.API.APIUtility;
 import com.jatmika.admin_e_complaintrangkasbitung.Model.DataUser;
+import com.jatmika.admin_e_complaintrangkasbitung.SharePref.SharePref;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import static android.text.TextUtils.isEmpty;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class InputPendudukActivity extends AppCompatActivity {
 
@@ -64,6 +74,9 @@ public class InputPendudukActivity extends AppCompatActivity {
 
     String jenkel;
     String show = "SHOW";
+
+    API apiService;
+    SharePref sharePref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +105,7 @@ public class InputPendudukActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 radioWanita.setChecked(false);
-                jenkel = "Pria";
+                jenkel = "Laki-laki";
             }
         });
 
@@ -100,9 +113,12 @@ public class InputPendudukActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 radioPria.setChecked(false);
-                jenkel = "Wanita";
+                jenkel = "Perempuan";
             }
         });
+
+        apiService = APIUtility.getAPI();
+        sharePref = new SharePref(this);
 
 
         myCalendar = Calendar.getInstance();
@@ -131,6 +147,40 @@ public class InputPendudukActivity extends AppCompatActivity {
         btnDaftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(InputPendudukActivity.this);
+                View mView = getLayoutInflater().inflate(R.layout.show_loading, null);
+
+                mBuilder.setView(mView);
+                mBuilder.setCancelable(false);
+                final AlertDialog mDialog = mBuilder.create();
+                mDialog.show();
+                String myFormat = "YYYY-MM-dd";
+                DateFormat sdf = new SimpleDateFormat(myFormat);
+                String tanggalLahir = sdf.format(myCalendar.getTime());
+                Log.i("dateDate", tanggalLahir);
+                if (TextUtils.isEmpty(edNik.getText().toString()) || TextUtils.isEmpty(edNama.getText().toString()) || TextUtils.isEmpty(edAlamat.getText().toString()) || TextUtils.isEmpty(edTlahir.getText().toString()) || TextUtils.isEmpty(edTTL.getText().toString()) || TextUtils.isEmpty(jenkel)){
+                    Toast.makeText(InputPendudukActivity.this, "Data tidak boleh kosong!", Toast.LENGTH_SHORT).show();
+                    mDialog.dismiss();
+                    return;
+                }else{
+                    apiService.addPenduduk("Bearer "+sharePref.getTokenApi(), edNik.getText().toString(), edNama.getText().toString(), jenkel, edTlahir.getText().toString(), tanggalLahir, edAlamat.getText().toString()).enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if(response.code() == 200){
+                                Toast.makeText(InputPendudukActivity.this, "Data Berhasil ditambah", Toast.LENGTH_SHORT).show();
+                                mDialog.dismiss();
+                                Intent intent = new Intent(InputPendudukActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                        }
+                    });
+                }
+
 
             }
         });
