@@ -12,12 +12,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.jatmika.admin_e_complaintrangkasbitung.SharePref.SharePref;
 
 public class SplashActivity extends AppCompatActivity {
 
     Animation fromnot;
     RelativeLayout relativeLayout;
     public static int splashInterval = 3000;
+    SharePref sharePref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +31,12 @@ public class SplashActivity extends AppCompatActivity {
         relativeLayout = findViewById(R.id.relative1);
         fromnot = AnimationUtils.loadAnimation(this, R.anim.fromnot);
         relativeLayout.startAnimation(fromnot);
+        sharePref = new SharePref(this);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+                if(sharePref.getStatusLogin() == true) {
                     Intent a = new Intent(SplashActivity.this, MainActivity.class);
                     startActivity(a);
 

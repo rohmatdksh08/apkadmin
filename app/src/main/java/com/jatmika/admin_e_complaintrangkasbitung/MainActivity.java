@@ -15,6 +15,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.jatmika.admin_e_complaintrangkasbitung.API.API;
+import com.jatmika.admin_e_complaintrangkasbitung.API.APIUtility;
 import com.jatmika.admin_e_complaintrangkasbitung.SharePref.SharePref;
 
 import androidx.annotation.NonNull;
@@ -31,11 +33,17 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "mFirebaseIIDService";
     private static String SUBSCRIBE_TO;
     private SharePref sharePref;
+    private API apiService;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -86,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mAuth = FirebaseAuth.getInstance();
         sharePref = new SharePref(this);
+        apiService = APIUtility.getAPI();
         Log.i("status_login", ""+sharePref.getStatusLogin()+"");
         if(sharePref.getStatusLogin() == false) {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
@@ -142,16 +151,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .setCancelable(false)
                 .setPositiveButton("Ya",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {
+                        apiService.logout("Bearer "+sharePref.getTokenApi()).enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if(response.code() == 200){
+                                    sharePref.setStatusLogin(false);
+                                    Toast.makeText(MainActivity.this, "Anda telah berhasil logout!",
+                                            Toast.LENGTH_LONG).show();
 
-                        mAuth.signOut();
-                        Toast.makeText(MainActivity.this, "Anda telah berhasil logout!",
-                                Toast.LENGTH_LONG).show();
+                                    Intent a = new Intent(MainActivity.this, LoginActivity.class);
+                                    startActivity(a);
+                                }
+                            }
 
-                        Intent a = new Intent(MainActivity.this, LoginActivity.class);
-                        startActivity(a);
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
 
-                        SUBSCRIBE_TO = "komplain";
-                        FirebaseMessaging.getInstance().unsubscribeFromTopic(String.valueOf(SUBSCRIBE_TO));
+                            }
+                        });
+
+//                        mAuth.signOut();
+
+
+//                        SUBSCRIBE_TO = "komplain";
+//                        FirebaseMessaging.getInstance().unsubscribeFromTopic(String.valueOf(SUBSCRIBE_TO));
                     }
                 })
                 .setNegativeButton("Tidak",new DialogInterface.OnClickListener() {

@@ -1,6 +1,7 @@
 package com.jatmika.admin_e_complaintrangkasbitung.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -42,12 +43,13 @@ public  class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recyc
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
         DataBerita currentBerita = beritas.get(position);
-        holder.judulTextView.setText(currentBerita.getJudulberita());
-        holder.tanggalTextView.setText(currentBerita.getTanggalposting());
-        holder.penulisTextView.setText(currentBerita.getPenulis());
-        holder.isiTextView.setText(currentBerita.getIsiberita());
+        holder.judulTextView.setText(currentBerita.getjudul());
+        holder.tanggalTextView.setText(currentBerita.getcreated_at());
+        holder.penulisTextView.setText(currentBerita.getnama());
+        holder.isiTextView.setText(currentBerita.getisi());
+        String urlImage = "http://192.168.216.94:8000/uploads/"+currentBerita.getFoto();
         Glide.with(mContext)
-                .load(currentBerita.getFoto())
+                .load(urlImage)
                 .into(holder.fotoImageView);
     }
 

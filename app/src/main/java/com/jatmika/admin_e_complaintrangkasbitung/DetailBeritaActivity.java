@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -37,15 +38,23 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.jatmika.admin_e_complaintrangkasbitung.API.API;
+import com.jatmika.admin_e_complaintrangkasbitung.API.APIUtility;
 import com.jatmika.admin_e_complaintrangkasbitung.Adapter.RecyclerAdapterKomentar;
 import com.jatmika.admin_e_complaintrangkasbitung.Adapter.RecyclerAdapterKomentarBerita;
 import com.jatmika.admin_e_complaintrangkasbitung.Model.Komentar;
+import com.jatmika.admin_e_complaintrangkasbitung.SharePref.SharePref;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.text.TextUtils.isEmpty;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DetailBeritaActivity extends AppCompatActivity {
 
@@ -62,6 +71,8 @@ public class DetailBeritaActivity extends AppCompatActivity {
     DatabaseReference mDatabaseRef;
     private List<Komentar> mKomentar;
     ValueEventListener mDBListener;
+    SharePref sharePref;
+    API apiService;
 
     FirebaseAuth mAuth;
     FirebaseUser firebaseUser;
@@ -96,6 +107,8 @@ public class DetailBeritaActivity extends AppCompatActivity {
         berita = i.getExtras().getString("BERITA_KEY");
         image = i.getExtras().getString("IMAGE_KEY");
         getKey = i.getExtras().getString("GETPRIMARY_KEY");
+        sharePref = new SharePref(this);
+        apiService = APIUtility.getAPI();
 
         initializeWidgets();
         displayKomentar();
@@ -108,8 +121,9 @@ public class DetailBeritaActivity extends AppCompatActivity {
         tanggalDetailTextView.setText(tanggal);
         penulisDetailTextView.setText(penulis);
         beritaDetailTextView.setText(berita);
+        String urlImage = "http://192.168.216.94:8000/uploads/"+image;
         Glide.with(this)
-                .load(image)
+                .load(urlImage)
                 .into(fotoDetailImageView);
 
         fotoDetailImageView.setOnClickListener(new View.OnClickListener() {
@@ -119,9 +133,10 @@ public class DetailBeritaActivity extends AppCompatActivity {
                 View mView = getLayoutInflater().inflate(R.layout.show_image, null);
                 ImageView imageView = mView.findViewById(R.id.imageView);
                 TextView btnClose = mView.findViewById(R.id.btnClose);
+                String urlImage = "http://192.168.216.94:8000/uploads/"+image;
 
                 Glide.with(DetailBeritaActivity.this)
-                        .load(image)
+                        .load(urlImage)
                         .into(imageView);
 
                 mBuilder.setView(mView);
@@ -175,25 +190,50 @@ public class DetailBeritaActivity extends AppCompatActivity {
                     mDialog.dismiss();
 
                 } else {
-                    FirebaseDatabase.getInstance().getReference("data_berita").child(getKey)
-                            .child("komentar").push().setValue(new Komentar(input.getText().toString(), "Admin",
-                            "")).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    linear2.setVisibility(View.GONE);
-                                    input.setText("");
-                                    btnTambahKomentar.setVisibility(View.VISIBLE);
-                                    mDialog.dismiss();
+                    apiService.addComentarBerita("Bearer "+sharePref.getTokenApi(), getKey, input.getText().toString()).enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if(response.code() == 200){
+                                linear2.setVisibility(View.GONE);
+                                input.setText("");
+                                btnTambahKomentar.setVisibility(View.VISIBLE);
+                                mDialog.dismiss();
+                                displayKomentar();
 
-                                    scrollView.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            scrollView.fullScroll(ScrollView.FOCUS_DOWN);
-                                            scrollView.isSmoothScrollingEnabled();
-                                        }
-                                    }, 200);
-                                }
-                            });
+                                scrollView.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                                        scrollView.isSmoothScrollingEnabled();
+                                    }
+                                }, 200);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                        }
+                    });
+//                    FirebaseDatabase.getInstance().getReference("data_berita").child(getKey)
+//                            .child("komentar").push().setValue(new Komentar(input.getText().toString(), "Admin",
+//                            "")).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                @Override
+//                                public void onSuccess(Void aVoid) {
+//                                    linear2.setVisibility(View.GONE);
+//                                    input.setText("");
+//                                    btnTambahKomentar.setVisibility(View.VISIBLE);
+//                                    mDialog.dismiss();
+//
+//                                    scrollView.postDelayed(new Runnable() {
+//                                        @Override
+//                                        public void run() {
+//                                            scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+//                                            scrollView.isSmoothScrollingEnabled();
+//                                        }
+//                                    }, 200);
+//                                }
+//                            });
                 }
             }
         });
@@ -221,24 +261,41 @@ public class DetailBeritaActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("data_berita").child(getKey).child("komentar");
-        mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
+        apiService.getComentarBerita("Bearer "+sharePref.getTokenApi(), getKey).enqueue(new Callback<List<Komentar>>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
+            public void onResponse(Call<List<Komentar>> call, Response<List<Komentar>> response) {
                 mKomentar.clear();
-
-                for (DataSnapshot komentarSnapshot : dataSnapshot.getChildren()) {
-                    Komentar upload = komentarSnapshot.getValue(Komentar.class);
-                    upload.setKey(komentarSnapshot.getKey());
-                    mKomentar.add(upload);
+                if(response.code() == 200){
+                    for (Komentar komentar : response.body()){
+                        mKomentar.add(komentar);
+                    }
+                    mAdapter.notifyDataSetChanged();
                 }
-                mAdapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(DetailBeritaActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<List<Komentar>> call, Throwable t) {
+
             }
         });
+//        mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                mKomentar.clear();
+//
+//                for (DataSnapshot komentarSnapshot : dataSnapshot.getChildren()) {
+//                    Komentar upload = komentarSnapshot.getValue(Komentar.class);
+//                    upload.setKey(komentarSnapshot.getKey());
+//                    mKomentar.add(upload);
+//                }
+//                mAdapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Toast.makeText(DetailBeritaActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 }

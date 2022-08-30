@@ -1,12 +1,12 @@
 package com.jatmika.admin_e_complaintrangkasbitung.Model;
 
 public class DataBerita {
-    private String judulberita;
+    private String judul;
     private String foto;
-    private String tanggalposting;
-    private String penulis;
-    private String isiberita;
-    private String key;
+    private String created_at;
+    private String nama;
+    private String isi_berita;
+    private String id_berita;
     private int position;
 
     public DataBerita() {
@@ -17,29 +17,29 @@ public class DataBerita {
         this.position = position;
     }
 
-    public DataBerita(String judulberita, String foto, String tanggalposting , String penulis , String isiberita) {
-        if (judulberita.trim().equals("")) {
-            judulberita = "No Name";
+    public DataBerita(String judul, String foto, String created_at , String nama , String isi_berita) {
+        if (judul.trim().equals("")) {
+            judul = "No Name";
         }
-        this.judulberita = judulberita;
+        this.judul = judul;
         this.foto = foto;
-        this.tanggalposting = tanggalposting;
-        this.penulis = penulis;
-        this.isiberita = isiberita;
+        this.created_at = created_at;
+        this.nama = nama;
+        this.isi_berita = isi_berita;
     }
 
-    public String getTanggalposting() {
-        return tanggalposting;
+    public String getcreated_at() {
+        return created_at;
     }
-    public void setTanggalposting(String tanggalposting) {
-        this.tanggalposting = tanggalposting;
+    public void setcreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
-    public String getJudulberita() {
-        return judulberita;
+    public String getjudul() {
+        return judul;
     }
-    public void setJudulberita(String judulberita) {
-        this.judulberita = judulberita;
+    public void setjudul(String judul) {
+        this.judul = judul;
     }
 
     public String getFoto() {
@@ -49,23 +49,23 @@ public class DataBerita {
         this.foto = foto;
     }
 
-    public String getPenulis() {
-        return penulis;
+    public String getnama() {
+        return nama;
     }
-    public void setPenulis(String penulis) {
-        this.penulis = penulis;
+    public void setnama(String nama) {
+        this.nama = nama;
     }
-    public String getIsiberita() {
-        return isiberita;
+    public String getisi() {
+        return isi_berita;
     }
-    public void setIsiberita(String isiberita) {
-        this.isiberita = isiberita;
+    public void setisi(String isi_berita) {
+        this.isi_berita = isi_berita;
     }
 
-    public String getKey() {
-        return key;
+    public String getid_berita() {
+        return id_berita;
     }
-    public void setKey(String key) {
-        this.key = key;
+    public void setid_berita(String id_berita) {
+        this.id_berita = id_berita;
     }
 }
