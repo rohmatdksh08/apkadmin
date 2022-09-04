@@ -90,6 +90,7 @@
         <activity
             android:name=".SplashActivity"
             android:noHistory="true"
+            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -99,13 +100,14 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".MyFirebaseInstanceIDService">
+        <service android:name=".MyFirebaseInstanceIDService" android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
         <service
             android:name=".MyFirebaseMessagingService"
+            android:exported="true"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
