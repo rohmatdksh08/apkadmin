@@ -27,15 +27,20 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.jatmika.admin_e_complaintrangkasbitung.API.API;
+import com.jatmika.admin_e_complaintrangkasbitung.API.APIUtility;
 import com.jatmika.admin_e_complaintrangkasbitung.Adapter.RecyclerAdapterKomplain;
 import com.jatmika.admin_e_complaintrangkasbitung.Model.Komplain;
 import com.jatmika.admin_e_complaintrangkasbitung.Model.PersentaseKomplain;
-
+import com.jatmika.admin_e_complaintrangkasbitung.SharePref.SharePref;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -49,6 +54,8 @@ public class FragmentNikah extends Fragment implements RecyclerAdapterKomplain.O
     private List<Komplain> mPengaduans;
     private TextView tvNoData;
     private Context context;
+    private SharePref sharePref;
+    private API apiService;
 
     private void openDetailKomplainNikah(String[] data){
         Intent intent = new Intent(getActivity(), DetailNikahActivity.class);
@@ -88,6 +95,8 @@ public class FragmentNikah extends Fragment implements RecyclerAdapterKomplain.O
         View view = inflater.inflate(R.layout.fragment_nikah, container, false);
 
         context = getActivity().getApplicationContext();
+        apiService = APIUtility.getAPI();
+        sharePref = new SharePref(context);
 
         tvNoData = view.findViewById(R.id.tvNoData);
         RecyclerView mRecyclerView = view.findViewById(R.id.mRecyclerView);
@@ -101,40 +110,21 @@ public class FragmentNikah extends Fragment implements RecyclerAdapterKomplain.O
 
         mStorage = FirebaseStorage.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("data_komplain");
-
-        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+        Log.i("token", sharePref.getTokenApi());
+        apiService.getComplain("Bearer "+sharePref.getTokenApi(), "surat nikah").enqueue(new Callback<List<Komplain>>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                Query query = mDatabaseRef.orderByChild("kategori").equalTo("Komplain Nikah");
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            mPengaduans.clear();
-                            for (DataSnapshot komplainSnapshot : dataSnapshot.getChildren()) {
-                                Komplain upload = komplainSnapshot.getValue(Komplain.class);
-                                upload.setKey(komplainSnapshot.getKey());
-                                mPengaduans.add(upload);
-                            }
-                            mAdapter.notifyDataSetChanged();
-                            tvNoData.setVisibility(View.GONE);
-                        } else {
-                            tvNoData.setVisibility(View.VISIBLE);
-                            tvNoData.setText("Belum Ada Komplain");
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
+            public void onResponse(Call<List<Komplain>> call, Response<List<Komplain>> response) {
+                Log.i("response", response.body().toString());
+                for (Komplain komplain : response.body()){
+                    mPengaduans.add(komplain);
+                }
+                mAdapter.notifyDataSetChanged();
+                tvNoData.setVisibility(View.GONE);
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getActivity(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<List<Komplain>> call, Throwable t) {
+                Log.i("responseError", t.toString());
             }
         });
 
@@ -143,7 +133,7 @@ public class FragmentNikah extends Fragment implements RecyclerAdapterKomplain.O
 
     @Override
     public void onDeleteItemClick(int position) {
-        showJumlahKomplain();
+//        showJumlahKomplain();
 
         Komplain selectedItem = mPengaduans.get(position);
         final String selectedKey = selectedItem.getKey();
@@ -168,7 +158,7 @@ public class FragmentNikah extends Fragment implements RecyclerAdapterKomplain.O
                             if (dataSnapshot.exists()){
                                 long totalData = dataSnapshot.getChildrenCount();
                                 FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain Nikah").child("jumlah_komplain").setValue(String.valueOf(totalData));
-                                showJumlahKomplain();
+//                                showJumlahKomplain();
 
                                 double komplainIUMK = Double.parseDouble(jumlahKomplainIUMK);
                                 double komplainKependudukan = Double.parseDouble(jumlahKomplainKependudukan);
@@ -198,7 +188,7 @@ public class FragmentNikah extends Fragment implements RecyclerAdapterKomplain.O
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                showJumlahKomplain();
+//                                                showJumlahKomplain();
 
                                                 double komplainIUMK = Double.parseDouble(jumlahKomplainIUMK);
                                                 double komplainKependudukan = Double.parseDouble(jumlahKomplainKependudukan);
@@ -258,7 +248,7 @@ public class FragmentNikah extends Fragment implements RecyclerAdapterKomplain.O
                                     if (dataSnapshot.exists()){
                                         long totalData = dataSnapshot.getChildrenCount();
                                         FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain Nikah").child("jumlah_komplain").setValue(String.valueOf(totalData));
-                                        showJumlahKomplain();
+//                                        showJumlahKomplain();
 
                                         double komplainIUMK = Double.parseDouble(jumlahKomplainIUMK);
                                         double komplainKependudukan = Double.parseDouble(jumlahKomplainKependudukan);
@@ -288,7 +278,7 @@ public class FragmentNikah extends Fragment implements RecyclerAdapterKomplain.O
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
-                                                        showJumlahKomplain();
+//                                                        showJumlahKomplain();
 
                                                         double komplainIUMK = Double.parseDouble(jumlahKomplainIUMK);
                                                         double komplainKependudukan = Double.parseDouble(jumlahKomplainKependudukan);

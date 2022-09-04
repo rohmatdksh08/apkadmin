@@ -40,11 +40,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.jatmika.admin_e_complaintrangkasbitung.API.API;
+import com.jatmika.admin_e_complaintrangkasbitung.API.APIUtility;
 import com.jatmika.admin_e_complaintrangkasbitung.Adapter.RecyclerAdapterKomentar;
 import com.jatmika.admin_e_complaintrangkasbitung.Adapter.RecyclerAdapterProses;
 import com.jatmika.admin_e_complaintrangkasbitung.Model.Komentar;
 import com.jatmika.admin_e_complaintrangkasbitung.Model.MySingleton;
 import com.jatmika.admin_e_complaintrangkasbitung.Model.Proses;
+import com.jatmika.admin_e_complaintrangkasbitung.SharePref.SharePref;
 import com.uncopt.android.widget.text.justify.JustifiedTextView;
 
 import org.json.JSONException;
@@ -56,6 +59,9 @@ import java.util.List;
 import java.util.Map;
 
 import static android.text.TextUtils.isEmpty;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class DetailKependudukanActivity extends AppCompatActivity {
 
@@ -90,6 +96,8 @@ public class DetailKependudukanActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     FirebaseUser firebaseUser;
+    private API apiService;
+    private SharePref sharePref;
 
     int satuan;
 
@@ -139,6 +147,9 @@ public class DetailKependudukanActivity extends AppCompatActivity {
         jml_suka = i.getExtras().getString("JML_SUKA_KEY");
         jml_balas = i.getExtras().getString("JML_BALAS_KEY");
         getKey = i.getExtras().getString("GETPRIMARY_KEY");
+
+        apiService = APIUtility.getAPI();
+        sharePref = new SharePref(this);
 
         initializeWidgets();
         displayKomentar();
@@ -190,9 +201,9 @@ public class DetailKependudukanActivity extends AppCompatActivity {
         });
 
         satuan = 1;
-        int jml_lihatlama = Integer.parseInt(jml_lihat);
+        int jml_lihatlama = 0;
         final int total = satuan + jml_lihatlama;
-        FirebaseDatabase.getInstance().getReference("data_komplain").child(getKey).child("jml_lihat").setValue(String.valueOf(total));
+//        FirebaseDatabase.getInstance().getReference("data_komplain").child(getKey).child("jml_lihat").setValue(String.valueOf(total));
 
         relative1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -386,100 +397,111 @@ public class DetailKependudukanActivity extends AppCompatActivity {
                     mDialog.dismiss();
 
                 } else {
-                    FirebaseDatabase.getInstance().getReference("data_komplain").child(getKey)
-                            .child("balasan").push().setValue(new Komentar(input.getText().toString(),
-                            namaDetailTextView.getText().toString(), firebaseUser.getEmail())).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    apiService.addComentar("Bearer "+sharePref.getTokenApi(), getKey, input.getText().toString()).enqueue(new Callback<Komentar>() {
                         @Override
-                        public void onSuccess(Void aVoid) { FirebaseDatabase.getInstance().getReference("data_komplain").child(getKey).child("balasan").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if (dataSnapshot.exists()) {
-                                    long totalBalas;
-                                    totalBalas = (dataSnapshot.getChildrenCount());
-                                    FirebaseDatabase.getInstance().getReference("data_komplain").child(getKey).child("jml_balas").setValue(String.valueOf(totalBalas))
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    Penerima = emailDetailTextView.getText().toString();
-                                                    Penerima = Penerima.replaceAll("[@.-]", "");
+//                        public void onSuccess(Void aVoid) { FirebaseDatabase.getInstance().getReference("data_komplain").child(getKey).child("balasan").addListenerForSingleValueEvent(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                                if (dataSnapshot.exists()) {
+//                                    long totalBalas;
+//                                    totalBalas = (dataSnapshot.getChildrenCount());
+//                                    FirebaseDatabase.getInstance().getReference("data_komplain").child(getKey).child("jml_balas").setValue(String.valueOf(totalBalas))
+//                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                                @Override
+//                                                public void onSuccess(Void aVoid) {
+//                                                    Penerima = emailDetailTextView.getText().toString();
+//                                                    Penerima = Penerima.replaceAll("[@.-]", "");
+//
+//                                                    TOPIC = "/topics/"+Penerima;
+//                                                    NOTIFICATION_TITLE = "Balasan Komplain Dari Admin";
+//                                                    NOTIFICATION_MESSAGE = input.getText().toString();
+//
+//                                                    JSONObject notification = new JSONObject();
+//                                                    JSONObject notifcationBody = new JSONObject();
+//                                                    try {
+//                                                        notifcationBody.put("title", NOTIFICATION_TITLE);
+//                                                        notifcationBody.put("message", NOTIFICATION_MESSAGE);
+//
+//                                                        notification.put("to", TOPIC);
+//                                                        notification.put("data", notifcationBody);
+//                                                    } catch (JSONException e) {
+//                                                        Log.e(TAG, "onCreate: " + e.getMessage() );
+//                                                    }
+//                                                    sendNotification(notification);
+//
+//                                                    linear2.setVisibility(View.GONE);
+//                                                    input.setText("");
+//                                                    btnTambahKomentar.setVisibility(View.VISIBLE);
+//                                                    mDialog.dismiss();
+//
+//                                                    scrollView.postDelayed(new Runnable() {
+//                                                        @Override
+//                                                        public void run() {
+//                                                            scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+//                                                            scrollView.isSmoothScrollingEnabled();
+//                                                        }
+//                                                    }, 200);
+//                                                }
+//                                            });
+//                                } else {
+//                                    FirebaseDatabase.getInstance().getReference("data_komplain").child(getKey).child("jml_balas").setValue("0")
+//                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                                @Override
+//                                                public void onSuccess(Void aVoid) {
+//                                                    Penerima = emailDetailTextView.getText().toString();
+//                                                    Penerima = Penerima.replaceAll("[@.-]", "");
+//
+//                                                    TOPIC = "/topics/"+Penerima;
+//                                                    NOTIFICATION_TITLE = "Balasan Komplain Dari Admin";
+//                                                    NOTIFICATION_MESSAGE = input.getText().toString();
+//
+//                                                    JSONObject notification = new JSONObject();
+//                                                    JSONObject notifcationBody = new JSONObject();
+//                                                    try {
+//                                                        notifcationBody.put("title", NOTIFICATION_TITLE);
+//                                                        notifcationBody.put("message", NOTIFICATION_MESSAGE);
+//
+//                                                        notification.put("to", TOPIC);
+//                                                        notification.put("data", notifcationBody);
+//                                                    } catch (JSONException e) {
+//                                                        Log.e(TAG, "onCreate: " + e.getMessage() );
+//                                                    }
+//                                                    sendNotification(notification);
+//
+//                                                    linear2.setVisibility(View.GONE);
+//                                                    input.setText("");
+//                                                    btnTambahKomentar.setVisibility(View.VISIBLE);
+//                                                    mDialog.dismiss();
+//
+//                                                    scrollView.postDelayed(new Runnable() {
+//                                                        @Override
+//                                                        public void run() {
+//                                                            scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+//                                                            scrollView.isSmoothScrollingEnabled();
+//                                                        }
+//                                                    }, 200);
+//                                                }
+//                                            });
+                        public void onResponse(Call<Komentar> call, retrofit2.Response<Komentar> response) {
+                            Log.i("responseAPI", response.body().toString());
+                            linear2.setVisibility(View.GONE);
+                            input.setText("");
+                            btnTambahKomentar.setVisibility(View.VISIBLE);
+                            mDialog.dismiss();
 
-                                                    TOPIC = "/topics/"+Penerima;
-                                                    NOTIFICATION_TITLE = "Balasan Komplain Dari Admin";
-                                                    NOTIFICATION_MESSAGE = input.getText().toString();
-
-                                                    JSONObject notification = new JSONObject();
-                                                    JSONObject notifcationBody = new JSONObject();
-                                                    try {
-                                                        notifcationBody.put("title", NOTIFICATION_TITLE);
-                                                        notifcationBody.put("message", NOTIFICATION_MESSAGE);
-
-                                                        notification.put("to", TOPIC);
-                                                        notification.put("data", notifcationBody);
-                                                    } catch (JSONException e) {
-                                                        Log.e(TAG, "onCreate: " + e.getMessage() );
-                                                    }
-                                                    sendNotification(notification);
-
-                                                    linear2.setVisibility(View.GONE);
-                                                    input.setText("");
-                                                    btnTambahKomentar.setVisibility(View.VISIBLE);
-                                                    mDialog.dismiss();
-
-                                                    scrollView.postDelayed(new Runnable() {
-                                                        @Override
-                                                        public void run() {
-                                                            scrollView.fullScroll(ScrollView.FOCUS_DOWN);
-                                                            scrollView.isSmoothScrollingEnabled();
-                                                        }
-                                                    }, 200);
-                                                }
-                                            });
-                                } else {
-                                    FirebaseDatabase.getInstance().getReference("data_komplain").child(getKey).child("jml_balas").setValue("0")
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    Penerima = emailDetailTextView.getText().toString();
-                                                    Penerima = Penerima.replaceAll("[@.-]", "");
-
-                                                    TOPIC = "/topics/"+Penerima;
-                                                    NOTIFICATION_TITLE = "Balasan Komplain Dari Admin";
-                                                    NOTIFICATION_MESSAGE = input.getText().toString();
-
-                                                    JSONObject notification = new JSONObject();
-                                                    JSONObject notifcationBody = new JSONObject();
-                                                    try {
-                                                        notifcationBody.put("title", NOTIFICATION_TITLE);
-                                                        notifcationBody.put("message", NOTIFICATION_MESSAGE);
-
-                                                        notification.put("to", TOPIC);
-                                                        notification.put("data", notifcationBody);
-                                                    } catch (JSONException e) {
-                                                        Log.e(TAG, "onCreate: " + e.getMessage() );
-                                                    }
-                                                    sendNotification(notification);
-
-                                                    linear2.setVisibility(View.GONE);
-                                                    input.setText("");
-                                                    btnTambahKomentar.setVisibility(View.VISIBLE);
-                                                    mDialog.dismiss();
-
-                                                    scrollView.postDelayed(new Runnable() {
-                                                        @Override
-                                                        public void run() {
-                                                            scrollView.fullScroll(ScrollView.FOCUS_DOWN);
-                                                            scrollView.isSmoothScrollingEnabled();
-                                                        }
-                                                    }, 200);
-                                                }
-                                            });
+                            scrollView.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                                    scrollView.isSmoothScrollingEnabled();
                                 }
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                            }, 200);
+                            displayKomentar();
+                        }
+                        @Override
+                        public void onFailure(Call<Komentar> call, Throwable t) {
+                            Log.i("responseAPI", t.toString());
 
-                            }
-                        });
                         }
                     });
                 }
@@ -534,20 +556,14 @@ public class DetailKependudukanActivity extends AppCompatActivity {
         mAdapter = new RecyclerAdapterKomentar (DetailKependudukanActivity.this, mKomentar);
         mRecyclerView.setAdapter(mAdapter);
 
-        mStorage = FirebaseStorage.getInstance();
-        mStorageRef = FirebaseStorage.getInstance().getReference("foto_komentar");
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("data_komplain").child(getKey).child("balasan");
-        mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
+        Log.i("keyKomplain", getKey);
+        apiService.getComentar("Bearer "+sharePref.getTokenApi(), getKey).enqueue(new Callback<List<Komentar>>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                if (dataSnapshot.exists()) {
-                    mKomentar.clear();
-
-                    for (DataSnapshot komentarSnapshot : dataSnapshot.getChildren()) {
-                        Komentar upload = komentarSnapshot.getValue(Komentar.class);
-                        upload.setKey(komentarSnapshot.getKey());
-                        mKomentar.add(upload);
+            public void onResponse(Call<List<Komentar>> call, retrofit2.Response<List<Komentar>> response) {
+                Log.i("response", "code"+response.code());
+                if(response.code() == 200){
+                    for (Komentar komentar : response.body()){
+                        mKomentar.add(komentar);
                     }
                     mAdapter.notifyDataSetChanged();
                     tvBalas.setText("Balasan Komplain");
@@ -560,8 +576,8 @@ public class DetailKependudukanActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(DetailKependudukanActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<List<Komentar>> call, Throwable t) {
+                Log.i("errorResponse", t.toString());
             }
         });
     }

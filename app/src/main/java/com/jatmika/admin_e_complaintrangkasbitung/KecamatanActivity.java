@@ -21,7 +21,7 @@ public class KecamatanActivity extends AppCompatActivity {
     Animation fromright;
 
     CarouselView carouselView;
-//    int[] sampleImages = {R.drawable.kecamatan1, R.drawable.kecamatan2, R.drawable.kecamatan3};
+    int[] sampleImages = {R.drawable.kecamatan1, R.drawable.kecamatan2, R.drawable.kecamatan3};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class KecamatanActivity extends AppCompatActivity {
         tvJudul.startAnimation(fromright);
 
         carouselView = findViewById(R.id.carouselView);
-//        carouselView.setPageCount(sampleImages.length);
+        carouselView.setPageCount(sampleImages.length);
         carouselView.setImageListener(imageListener);
 
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +52,7 @@ public class KecamatanActivity extends AppCompatActivity {
     ImageListener imageListener = new ImageListener() {
         @Override
         public void setImageForPosition(int position, ImageView imageView) {
-//            imageView.setImageResource(sampleImages[position]);
+            imageView.setImageResource(sampleImages[position]);
         }
     };
 }

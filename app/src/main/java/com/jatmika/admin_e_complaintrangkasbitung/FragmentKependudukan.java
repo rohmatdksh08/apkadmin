@@ -27,15 +27,22 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.jatmika.admin_e_complaintrangkasbitung.API.API;
+import com.jatmika.admin_e_complaintrangkasbitung.API.APIUtility;
 import com.jatmika.admin_e_complaintrangkasbitung.Adapter.RecyclerAdapterKomplain;
 import com.jatmika.admin_e_complaintrangkasbitung.Model.Komplain;
 import com.jatmika.admin_e_complaintrangkasbitung.Model.PersentaseKomplain;
+import com.jatmika.admin_e_complaintrangkasbitung.SharePref.SharePref;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -49,6 +56,8 @@ public class FragmentKependudukan extends Fragment implements RecyclerAdapterKom
     private List<Komplain> mPengaduans;
     private TextView tvNoData;
     private Context context;
+    private SharePref sharePref;
+    private API apiService;
 
     private void openDetailKomplainKependudukan(String[] data){
         Intent intent = new Intent(getActivity(), DetailKependudukanActivity.class);
@@ -88,6 +97,8 @@ public class FragmentKependudukan extends Fragment implements RecyclerAdapterKom
         View view = inflater.inflate(R.layout.fragment_kependudukan, container, false);
 
         context = getActivity().getApplicationContext();
+        apiService = APIUtility.getAPI();
+        sharePref = new SharePref(context);
 
         tvNoData = view.findViewById(R.id.tvNoData);
         RecyclerView mRecyclerView = view.findViewById(R.id.mRecyclerView);
@@ -102,42 +113,49 @@ public class FragmentKependudukan extends Fragment implements RecyclerAdapterKom
         mStorage = FirebaseStorage.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("data_komplain");
 
-        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            Log.i("token", sharePref.getTokenApi());
+        apiService.getComplain("Bearer "+sharePref.getTokenApi(), "Surat Permohonan Administrasi Kependudukan").enqueue(new Callback<List<Komplain>>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                Query query = mDatabaseRef.orderByChild("kategori").equalTo("Komplain Kependudukan");
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            mPengaduans.clear();
-                            for (DataSnapshot komplainSnapshot : dataSnapshot.getChildren()) {
-                                Komplain upload = komplainSnapshot.getValue(Komplain.class);
-                                upload.setKey(komplainSnapshot.getKey());
-                                mPengaduans.add(upload);
-                            }
-                            mAdapter.notifyDataSetChanged();
-                            tvNoData.setVisibility(View.GONE);
-                        } else {
-                            tvNoData.setVisibility(View.VISIBLE);
-                            tvNoData.setText("Belum Ada Komplain");
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
+            public void onResponse(Call<List<Komplain>> call, Response<List<Komplain>> response) {
+                Log.i("response", response.body().toString());
+                for (Komplain komplain : response.body()){
+                    mPengaduans.add(komplain);
+                }
+                mAdapter.notifyDataSetChanged();
+                tvNoData.setVisibility(View.GONE);
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getActivity(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<List<Komplain>> call, Throwable t) {
+                Log.i("responseError", t.toString());
             }
         });
-
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                Query query = mDatabaseRef.orderByChild("kategori").equalTo("Komplain Kependudukan");
+//                query.addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                        if (dataSnapshot.exists()) {
+//                            mPengaduans.clear();
+//                            for (DataSnapshot komplainSnapshot : dataSnapshot.getChildren()) {
+//                                Komplain upload = komplainSnapshot.getValue(Komplain.class);
+//                                upload.setKey(komplainSnapshot.getKey());
+//                                mPengaduans.add(upload);
+//                            }
+//                            mAdapter.notifyDataSetChanged();
+//                            tvNoData.setVisibility(View.GONE);
+//                        } else {
+//                            tvNoData.setVisibility(View.VISIBLE);
+//                            tvNoData.setText("Belum Ada Komplain");
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                    }
+//                });
         return view;
     }
 

@@ -82,7 +82,7 @@
                             android:layout_width="210dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="411.3/01/Rangkasbitung/2020"
+                            android:text="411.3/01/Rancabango/2022"
                             android:textSize="12sp"
                             android:textColor="#5117B6"/>
                     </TableRow>
@@ -108,7 +108,7 @@
                             android:layout_width="210dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="Jatmika Muhammad"
+                            android:text="Rohmatullah"
                             android:textSize="12sp"
                             android:textColor="#5117B6"/>
                     </TableRow>
@@ -133,7 +133,7 @@
                             android:layout_width="210dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="Jl. Bakti Manunggal, Kp. Selahaur, Kel. Cijoro Lebak"
+                            android:text="Jl. Syeh Nawawi, Kp. Ampel, Kel. Rancabango"
                             android:textSize="12sp"
                             android:textColor="#5117B6"/>
                     </TableRow>
@@ -159,7 +159,7 @@
                             android:layout_width="210dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="25 November 2019"
+                            android:text="25 Agustus 2022"
                             android:textSize="12sp"
                             android:textColor="#5117B6"/>
                     </TableRow>

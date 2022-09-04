@@ -118,6 +118,7 @@ public class FragmentKTP extends Fragment implements RecyclerAdapterKomplain.OnI
         apiService.getComplain("Bearer "+sharePref.getTokenApi(), "ktp").enqueue(new Callback<List<Komplain>>() {
             @Override
             public void onResponse(Call<List<Komplain>> call, Response<List<Komplain>> response) {
+                Log.i("response", response.body().toString());
                 for (Komplain komplain : response.body()){
                     mPengaduans.add(komplain);
                 }

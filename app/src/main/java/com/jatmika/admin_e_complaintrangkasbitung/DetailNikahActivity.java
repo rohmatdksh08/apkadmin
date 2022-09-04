@@ -41,11 +41,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.jatmika.admin_e_complaintrangkasbitung.API.API;
+import com.jatmika.admin_e_complaintrangkasbitung.API.APIUtility;
 import com.jatmika.admin_e_complaintrangkasbitung.Adapter.RecyclerAdapterKomentar;
 import com.jatmika.admin_e_complaintrangkasbitung.Adapter.RecyclerAdapterProses;
 import com.jatmika.admin_e_complaintrangkasbitung.Model.Komentar;
 import com.jatmika.admin_e_complaintrangkasbitung.Model.MySingleton;
 import com.jatmika.admin_e_complaintrangkasbitung.Model.Proses;
+import com.jatmika.admin_e_complaintrangkasbitung.SharePref.SharePref;
 import com.uncopt.android.widget.text.justify.JustifiedTextView;
 
 import org.json.JSONException;
@@ -58,7 +61,8 @@ import java.util.Map;
 
 import static android.os.Environment.DIRECTORY_DOWNLOADS;
 import static android.text.TextUtils.isEmpty;
-
+import retrofit2.Call;
+import retrofit2.Callback;
 public class DetailNikahActivity extends AppCompatActivity {
 
     final private String serverKey = "key=" + "AIzaSyDL3TGOXPGwfM7iIf_pX4zqD3IbTr-I45w";
@@ -91,7 +95,8 @@ public class DetailNikahActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     FirebaseUser firebaseUser;
-
+    private API apiService;
+    private SharePref sharePref;
     int satuan;
 
     private void initializeWidgets(){
@@ -141,6 +146,8 @@ public class DetailNikahActivity extends AppCompatActivity {
         jml_suka = i.getExtras().getString("JML_SUKA_KEY");
         jml_balas = i.getExtras().getString("JML_BALAS_KEY");
         getKey = i.getExtras().getString("GETPRIMARY_KEY");
+        apiService = APIUtility.getAPI();
+        sharePref = new SharePref(this);
 
         initializeWidgets();
         displayKomentar();
@@ -168,9 +175,9 @@ public class DetailNikahActivity extends AppCompatActivity {
         statusDetailTextView.setText(status);
 
         satuan = 1;
-        int jml_lihatlama = Integer.parseInt(jml_lihat);
+        int jml_lihatlama = 0;
         final int total = satuan + jml_lihatlama;
-        FirebaseDatabase.getInstance().getReference("data_komplain").child(getKey).child("jml_lihat").setValue(String.valueOf(total));
+        //FirebaseDatabase.getInstance().getReference("data_komplain").child(getKey).child("jml_lihat").setValue(String.valueOf(total));
 
         relative1.setOnClickListener(new View.OnClickListener() {
             @Override

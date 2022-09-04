@@ -102,7 +102,7 @@ public class FragmentBerita extends Fragment implements RecyclerAdapter.OnItemCl
         mAdapter.setOnItemClickListener(this);
 
         mStorage = FirebaseStorage.getInstance();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("data_berita");
+//        mDatabaseRef = FirebaseDatabase.getInstance().getReference("data_berita");
 
         apiService.getBerita("Bearer "+sharePref.getTokenApi()).enqueue(new Callback<List<DataBerita>>() {
             @Override

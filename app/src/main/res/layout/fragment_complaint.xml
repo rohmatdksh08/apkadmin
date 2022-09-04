@@ -15,46 +15,46 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            app:tabTextColor="#7C4DFF"
+            app:tabIndicatorColor="#FFFFFF"
             app:tabMode="fixed"
             app:tabSelectedTextColor="#FFFFFF"
-            app:tabIndicatorColor="#FFFFFF">
+            app:tabTextColor="#7C4DFF">
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab_ktp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:icon="@drawable/k2"/>
+                android:icon="@drawable/k2" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab_iumk"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:icon="@drawable/k3"/>
+                android:icon="@drawable/k3" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab_kependudukan"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:icon="@drawable/k4"/>
+                android:icon="@drawable/k4" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab_nikah"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:icon="@drawable/k5"/>
+                android:icon="@drawable/k5" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab_sppt"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:icon="@drawable/k6"/>
+                android:icon="@drawable/k6" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab_tutup_jalan"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:icon="@drawable/k7"/>
+                android:icon="@drawable/k7" />
 
         </com.google.android.material.tabs.TabLayout>
 
