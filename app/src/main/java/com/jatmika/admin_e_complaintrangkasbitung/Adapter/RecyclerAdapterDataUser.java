@@ -28,7 +28,7 @@ public  class RecyclerAdapterDataUser extends RecyclerView.Adapter<RecyclerAdapt
 
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.item_data_user, parent, false);
+        View v = LayoutInflater.from(mContext).inflate(R.layout.item_data_user2, parent, false);
         return new RecyclerViewHolder(v);
     }
 
@@ -36,10 +36,11 @@ public  class RecyclerAdapterDataUser extends RecyclerView.Adapter<RecyclerAdapt
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
         DataUser currentMahasiswa = dataMahasiswas.get(position);
         holder.tvNama.setText(currentMahasiswa.getNama());
-        holder.tvLahir.setText(currentMahasiswa.getTtl());
-        holder.tvAlamat.setText(currentMahasiswa.getAlamat());
+        holder.tvLahir.setText(currentMahasiswa.getNik());
+        holder.tvAlamat.setText(currentMahasiswa.getEmail());
+        holder.noHp.setText(currentMahasiswa.getNohp());
         Glide.with(mContext)
-                .load(currentMahasiswa.getPhoto())
+                .load(R.mipmap.ic_launcher)
                 .into(holder.fotoImageView);
     }
 
@@ -50,7 +51,7 @@ public  class RecyclerAdapterDataUser extends RecyclerView.Adapter<RecyclerAdapt
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public TextView tvNama, tvLahir, tvAlamat;
+        public TextView tvNama, tvLahir, tvAlamat, noHp;
         public ImageView fotoImageView;
 
         public RecyclerViewHolder(View itemView) {
@@ -59,7 +60,7 @@ public  class RecyclerAdapterDataUser extends RecyclerView.Adapter<RecyclerAdapt
             tvLahir = itemView.findViewById(R.id.lahirTextView);
             tvAlamat = itemView.findViewById(R.id.alamatTextView);
             fotoImageView = itemView.findViewById(R.id.fotoImageView);
-
+            noHp = itemView.findViewById(R.id.nohpTextView);
             itemView.setOnClickListener(this);
         }
 

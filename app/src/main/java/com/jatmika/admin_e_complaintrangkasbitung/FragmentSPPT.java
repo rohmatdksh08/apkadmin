@@ -40,6 +40,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -149,184 +150,21 @@ public class FragmentSPPT extends Fragment implements RecyclerAdapterKomplain.On
         final AlertDialog mDialog = mBuilder.create();
         mDialog.show();
 
-        if (url.equals("")){
-            mDatabaseRef.child(selectedKey).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    FirebaseDatabase.getInstance().getReference("data_komplain").orderByChild("kategori").equalTo("Komplain SPPT").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.exists()) {
-                                long totalData = dataSnapshot.getChildrenCount();
-                                FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain SPPT").child("jumlah_komplain").setValue(String.valueOf(totalData));
-                                showJumlahKomplain();
-
-                                double komplainIUMK = Double.parseDouble(jumlahKomplainIUMK);
-                                double komplainKependudukan = Double.parseDouble(jumlahKomplainKependudukan);
-                                double komplainKTP = Double.parseDouble(jumlahKomplainKTP);
-                                double komplainNikah = Double.parseDouble(jumlahKomplainNikah);
-                                double komplainSPPT = Double.parseDouble(String.valueOf(totalData));
-                                double komplainTutupJalan = Double.parseDouble(jumlahKomplainTutupJalan);
-                                double TotalPersen2 = (komplainIUMK / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                double TotalPersen3 = (komplainKependudukan / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                double TotalPersen4 = (komplainKTP / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                double TotalPersen5 = (komplainNikah / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                double TotalPersen6 = (komplainSPPT / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                double TotalPersen7 = (komplainTutupJalan / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-
-                                FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain IUMK").child("persen").setValue(String.valueOf(TotalPersen2));
-                                FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain Kependudukan").child("persen").setValue(String.valueOf(TotalPersen3));
-                                FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain KTP").child("persen").setValue(String.valueOf(TotalPersen4));
-                                FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain Nikah").child("persen").setValue(String.valueOf(TotalPersen5));
-                                FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain SPPT").child("persen").setValue(String.valueOf(TotalPersen6));
-                                FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain Tutup Jalan").child("persen").setValue(String.valueOf(TotalPersen7));
-
-                                mDialog.dismiss();
-                                Toast.makeText(FragmentSPPT.this.context, "Komplain telah dihapus!", Toast.LENGTH_SHORT).show();
-
-                            } else {
-                                FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain SPPT").child("jumlah_komplain").setValue("0")
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                showJumlahKomplain();
-
-                                                double komplainIUMK = Double.parseDouble(jumlahKomplainIUMK);
-                                                double komplainKependudukan = Double.parseDouble(jumlahKomplainKependudukan);
-                                                double komplainKTP = Double.parseDouble(jumlahKomplainKTP);
-                                                double komplainNikah = Double.parseDouble(jumlahKomplainNikah);
-                                                double komplainSPPT = 0;
-                                                double komplainTutupJalan = Double.parseDouble(jumlahKomplainTutupJalan);
-
-                                                if (komplainIUMK == 0 && komplainKependudukan == 0 && komplainKTP == 0
-                                                        && komplainNikah == 0 && komplainTutupJalan == 0){
-                                                    FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain SPPT").child("persen").setValue("0.0");
-                                                    mDialog.dismiss();
-                                                    Toast.makeText(FragmentSPPT.this.context, "Komplain telah dihapus!", Toast.LENGTH_SHORT).show();
-
-                                                } else {
-                                                    double TotalPersen2 = (komplainIUMK / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                                    double TotalPersen3 = (komplainKependudukan / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                                    double TotalPersen4 = (komplainKTP / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                                    double TotalPersen5 = (komplainNikah / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                                    double TotalPersen6 = (komplainSPPT / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                                    double TotalPersen7 = (komplainTutupJalan / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-
-                                                    FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain IUMK").child("persen").setValue(String.valueOf(TotalPersen2));
-                                                    FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain Kependudukan").child("persen").setValue(String.valueOf(TotalPersen3));
-                                                    FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain KTP").child("persen").setValue(String.valueOf(TotalPersen4));
-                                                    FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain Nikah").child("persen").setValue(String.valueOf(TotalPersen5));
-                                                    FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain SPPT").child("persen").setValue(String.valueOf(TotalPersen6));
-                                                    FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain Tutup Jalan").child("persen").setValue(String.valueOf(TotalPersen7));
-
-                                                    mDialog.dismiss();
-                                                    Toast.makeText(FragmentSPPT.this.context, "Komplain telah dihapus!", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                        });
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
+        apiService.deleteKomplain("Bearer "+sharePref.getTokenApi(), selectedKey).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.i("deleteResponse", response.toString());
+                if(response.code() == 200){
+                    mDialog.dismiss();
+                    Toast.makeText(FragmentSPPT.this.context, "Komplain telah dihapus!", Toast.LENGTH_SHORT).show();
                 }
-            });
+            }
 
-        } else {
-            StorageReference imageRef = mStorage.getReferenceFromUrl(selectedItem.getBerkas());
-            imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    mDatabaseRef.child(selectedKey).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            FirebaseDatabase.getInstance().getReference("data_komplain").orderByChild("kategori").equalTo("Komplain SPPT").addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    if (dataSnapshot.exists()) {
-                                        long totalData = dataSnapshot.getChildrenCount();
-                                        FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain SPPT").child("jumlah_komplain").setValue(String.valueOf(totalData));
-                                        showJumlahKomplain();
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
 
-                                        double komplainIUMK = Double.parseDouble(jumlahKomplainIUMK);
-                                        double komplainKependudukan = Double.parseDouble(jumlahKomplainKependudukan);
-                                        double komplainKTP = Double.parseDouble(jumlahKomplainKTP);
-                                        double komplainNikah = Double.parseDouble(jumlahKomplainNikah);
-                                        double komplainSPPT = Double.parseDouble(String.valueOf(totalData));
-                                        double komplainTutupJalan = Double.parseDouble(jumlahKomplainTutupJalan);
-                                        double TotalPersen2 = (komplainIUMK / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                        double TotalPersen3 = (komplainKependudukan / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                        double TotalPersen4 = (komplainKTP / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                        double TotalPersen5 = (komplainNikah / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                        double TotalPersen6 = (komplainSPPT / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                        double TotalPersen7 = (komplainTutupJalan / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-
-                                        FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain IUMK").child("persen").setValue(String.valueOf(TotalPersen2));
-                                        FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain Kependudukan").child("persen").setValue(String.valueOf(TotalPersen3));
-                                        FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain KTP").child("persen").setValue(String.valueOf(TotalPersen4));
-                                        FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain Nikah").child("persen").setValue(String.valueOf(TotalPersen5));
-                                        FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain SPPT").child("persen").setValue(String.valueOf(TotalPersen6));
-                                        FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain Tutup Jalan").child("persen").setValue(String.valueOf(TotalPersen7));
-
-                                        mDialog.dismiss();
-                                        Toast.makeText(FragmentSPPT.this.context, "Komplain telah dihapus!", Toast.LENGTH_SHORT).show();
-
-                                    } else {
-                                        FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain SPPT").child("jumlah_komplain").setValue("0")
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        showJumlahKomplain();
-
-                                                        double komplainIUMK = Double.parseDouble(jumlahKomplainIUMK);
-                                                        double komplainKependudukan = Double.parseDouble(jumlahKomplainKependudukan);
-                                                        double komplainKTP = Double.parseDouble(jumlahKomplainKTP);
-                                                        double komplainNikah = Double.parseDouble(jumlahKomplainNikah);
-                                                        double komplainSPPT = 0;
-                                                        double komplainTutupJalan = Double.parseDouble(jumlahKomplainTutupJalan);
-
-                                                        if (komplainIUMK == 0 && komplainKependudukan == 0 && komplainKTP == 0
-                                                                && komplainNikah == 0 && komplainTutupJalan == 0){
-                                                            FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain SPPT").child("persen").setValue("0.0");
-                                                            mDialog.dismiss();
-                                                            Toast.makeText(FragmentSPPT.this.context, "Komplain telah dihapus!", Toast.LENGTH_SHORT).show();
-
-                                                        } else {
-                                                            double TotalPersen2 = (komplainIUMK / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                                            double TotalPersen3 = (komplainKependudukan / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                                            double TotalPersen4 = (komplainKTP / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                                            double TotalPersen5 = (komplainNikah / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                                            double TotalPersen6 = (komplainSPPT / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                                            double TotalPersen7 = (komplainTutupJalan / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-
-                                                            FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain IUMK").child("persen").setValue(String.valueOf(TotalPersen2));
-                                                            FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain Kependudukan").child("persen").setValue(String.valueOf(TotalPersen3));
-                                                            FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain KTP").child("persen").setValue(String.valueOf(TotalPersen4));
-                                                            FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain Nikah").child("persen").setValue(String.valueOf(TotalPersen5));
-                                                            FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain SPPT").child("persen").setValue(String.valueOf(TotalPersen6));
-                                                            FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain Tutup Jalan").child("persen").setValue(String.valueOf(TotalPersen7));
-
-                                                            mDialog.dismiss();
-                                                            Toast.makeText(FragmentSPPT.this.context, "Komplain telah dihapus!", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    }
-                                                });
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
-                        }
-                    });
-                }
-            });
-        }
+            }
+        });
     }
 
     @Override

@@ -1,7 +1,10 @@
 package com.jatmika.admin_e_complaintrangkasbitung.Adapter;
 
 import android.content.Context;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -52,7 +55,7 @@ public  class PendudukAdapter extends RecyclerView.Adapter<PendudukAdapter.Recyc
         return dataPenduduks.size();
     }
 
-    public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, View.OnClickListener, MenuItem.OnMenuItemClickListener{
 
         public TextView tvNama, tvLahir, tvAlamat;
         public ImageView fotoImageView;
@@ -65,6 +68,23 @@ public  class PendudukAdapter extends RecyclerView.Adapter<PendudukAdapter.Recyc
             fotoImageView = itemView.findViewById(R.id.fotoImageView);
 
             itemView.setOnClickListener(this);
+            itemView.setOnCreateContextMenuListener(this);
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            if (mListener != null) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+
+                    switch (item.getItemId()) {
+                        case 1:
+                            mListener.onDeleteItemClick(position);
+                            return true;
+                    }
+                }
+            }
+            return false;
         }
 
         @Override
@@ -76,10 +96,17 @@ public  class PendudukAdapter extends RecyclerView.Adapter<PendudukAdapter.Recyc
                 }
             }
         }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            MenuItem deleteItem = menu.add(Menu.NONE, 1, 1, "Hapus");
+            deleteItem.setOnMenuItemClickListener(this);
+        }
     }
 
     public interface OnItemClickListener {
         void onItemClick(int position);
+        void onDeleteItemClick(int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {

@@ -276,25 +276,6 @@ public class DetailIUMKActivity extends AppCompatActivity {
                     mAdapter = new RecyclerAdapterProses(DetailIUMKActivity.this, mProsess);
                     mRecyclerView.setAdapter(mAdapter);
 
-                    mDBListener = databaseReference.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-
-                            mProsess.clear();
-                            for (DataSnapshot kandidatSnapshot : dataSnapshot.getChildren()) {
-                                Proses upload = kandidatSnapshot.getValue(Proses.class);
-                                upload.setKey(kandidatSnapshot.getKey());
-                                mProsess.add(upload);
-                            }
-                            mAdapter.notifyDataSetChanged();
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                            Toast.makeText(DetailIUMKActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
                     tvStatus.setText(status);
                     tvNomor.setText("No : "+nomor);
                     btnClose.setOnClickListener(new View.OnClickListener() {
@@ -416,6 +397,25 @@ public class DetailIUMKActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        btnDokumen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String berkasUrl = "https://api-rohmat.kosanbahari.xyz/uploads/"+berkas;
+                downloadFile(DetailIUMKActivity.this, "dokumen-iumk-"+nama, ".docx", DIRECTORY_DOWNLOADS, berkasUrl);
+            }
+        });
+    }
+
+    public void downloadFile(Context context, String fileName, String fileExtension, String downloadDirectory, String url){
+        DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+        Uri uri = Uri.parse(url);
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setVisibleInDownloadsUi(true);
+        request.setDestinationInExternalFilesDir(context, downloadDirectory, fileName + fileExtension);
+        downloadManager.enqueue(request);
     }
 
     private void sendNotification(JSONObject notification) {

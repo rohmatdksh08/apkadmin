@@ -393,7 +393,8 @@ public class DetailSPPTActivity extends AppCompatActivity {
         btnDokumen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                downloadFile(DetailSPPTActivity.this, "dokumen-sppt-"+nama, ".docx", DIRECTORY_DOWNLOADS, berkas);
+                String berkasUrl = "https://api-rohmat.kosanbahari.xyz/uploads/"+berkas;
+                downloadFile(DetailSPPTActivity.this, "dokumen-sppt-"+nama, ".docx", DIRECTORY_DOWNLOADS, berkasUrl);
             }
         });
     }

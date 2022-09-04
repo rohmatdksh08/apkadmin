@@ -40,6 +40,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -173,95 +174,19 @@ public class FragmentKependudukan extends Fragment implements RecyclerAdapterKom
         mBuilder.setCancelable(false);
         final AlertDialog mDialog = mBuilder.create();
         mDialog.show();
-
-        StorageReference imageRef = mStorage.getReferenceFromUrl(selectedItem.getFoto());
-        imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+        apiService.deleteKomplain("Bearer "+sharePref.getTokenApi(), selectedKey).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onSuccess(Void aVoid) {
-                mDatabaseRef.child(selectedKey).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        FirebaseDatabase.getInstance().getReference("data_komplain").orderByChild("kategori").equalTo("Komplain Kependudukan").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if (dataSnapshot.exists()){
-                                    long totalData = dataSnapshot.getChildrenCount();
-                                    FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain Kependudukan").child("jumlah_komplain").setValue(String.valueOf(totalData));
-                                    showJumlahKomplain();
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.i("deleteResponse", response.toString());
+                if(response.code() == 200){
+                    mDialog.dismiss();
+                    Toast.makeText(FragmentKependudukan.this.context, "Komplain telah dihapus!", Toast.LENGTH_SHORT).show();
+                }
+            }
 
-                                    double komplainIUMK = Double.parseDouble(jumlahKomplainIUMK);
-                                    double komplainKependudukan = Double.parseDouble(String.valueOf(totalData));
-                                    double komplainKTP = Double.parseDouble(jumlahKomplainKTP);
-                                    double komplainNikah = Double.parseDouble(jumlahKomplainNikah);
-                                    double komplainSPPT = Double.parseDouble(jumlahKomplainSPPT);
-                                    double komplainTutupJalan = Double.parseDouble(jumlahKomplainTutupJalan);
-                                    double TotalPersen2 = (komplainIUMK / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                    double TotalPersen3 = (komplainKependudukan / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                    double TotalPersen4 = (komplainKTP / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                    double TotalPersen5 = (komplainNikah / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                    double TotalPersen6 = (komplainSPPT / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                    double TotalPersen7 = (komplainTutupJalan / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
 
-                                    FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain IUMK").child("persen").setValue(String.valueOf(TotalPersen2));
-                                    FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain Kependudukan").child("persen").setValue(String.valueOf(TotalPersen3));
-                                    FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain KTP").child("persen").setValue(String.valueOf(TotalPersen4));
-                                    FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain Nikah").child("persen").setValue(String.valueOf(TotalPersen5));
-                                    FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain SPPT").child("persen").setValue(String.valueOf(TotalPersen6));
-                                    FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain Tutup Jalan").child("persen").setValue(String.valueOf(TotalPersen7));
-
-                                    mDialog.dismiss();
-                                    Toast.makeText(FragmentKependudukan.this.context, "Komplain telah dihapus!", Toast.LENGTH_SHORT).show();
-
-                                } else {
-                                    FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain Kependudukan").child("jumlah_komplain").setValue("0")
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    showJumlahKomplain();
-
-                                                    double komplainIUMK = Double.parseDouble(jumlahKomplainIUMK);
-                                                    double komplainKependudukan = 0;
-                                                    double komplainKTP = Double.parseDouble(jumlahKomplainKTP);
-                                                    double komplainNikah = Double.parseDouble(jumlahKomplainNikah);
-                                                    double komplainSPPT = Double.parseDouble(jumlahKomplainSPPT);
-                                                    double komplainTutupJalan = Double.parseDouble(jumlahKomplainTutupJalan);
-
-                                                    if (komplainIUMK == 0 && komplainKTP == 0 && komplainNikah == 0
-                                                            && komplainSPPT == 0 && komplainTutupJalan == 0) {
-                                                        FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain Kependudukan").child("persen").setValue("0.0");
-                                                        mDialog.dismiss();
-                                                        Toast.makeText(FragmentKependudukan.this.context, "Komplain telah dihapus!", Toast.LENGTH_SHORT).show();
-
-                                                    } else {
-                                                        double TotalPersen2 = (komplainIUMK / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                                        double TotalPersen3 = (komplainKependudukan / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                                        double TotalPersen4 = (komplainKTP / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                                        double TotalPersen5 = (komplainNikah / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                                        double TotalPersen6 = (komplainSPPT / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-                                                        double TotalPersen7 = (komplainTutupJalan / ( komplainIUMK + komplainKependudukan + komplainKTP + komplainNikah + komplainSPPT + komplainTutupJalan)) * 100;
-
-                                                        FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain IUMK").child("persen").setValue(String.valueOf(TotalPersen2));
-                                                        FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain Kependudukan").child("persen").setValue(String.valueOf(TotalPersen3));
-                                                        FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain KTP").child("persen").setValue(String.valueOf(TotalPersen4));
-                                                        FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain Nikah").child("persen").setValue(String.valueOf(TotalPersen5));
-                                                        FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain SPPT").child("persen").setValue(String.valueOf(TotalPersen6));
-                                                        FirebaseDatabase.getInstance().getReference("data_persentase_komplain").child("Komplain Tutup Jalan").child("persen").setValue(String.valueOf(TotalPersen7));
-
-                                                        mDialog.dismiss();
-                                                        Toast.makeText(FragmentKependudukan.this.context, "Komplain telah dihapus!", Toast.LENGTH_SHORT).show();
-                                                    }
-                                                }
-                                            });
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
-                });
             }
         });
     }

@@ -2,7 +2,7 @@ package com.jatmika.admin_e_complaintrangkasbitung.Model;
 
 public class DataUser {
 
-    private String photo, nik, email, password, nama, ttl, jenkel, alamat, nohp, key;
+    private String  nik, email, nama_penduduk, no_telpon, key;
     private int position;
 
     public DataUser() {
@@ -13,23 +13,11 @@ public class DataUser {
         this.position = position;
     }
 
-    public DataUser(String photo, String nik, String email, String password, String nama, String ttl, String jenkel, String alamat, String nohp) {
-        this.photo = photo;
+    public DataUser( String nik, String email, String nama_penduduk, String no_telpon) {
         this.nik = nik;
         this.email = email;
-        this.password = password;
-        this.nama = nama;
-        this.ttl = ttl;
-        this.jenkel = jenkel;
-        this.alamat = alamat;
-        this.nohp = nohp;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-    public void setPhoto(String photo) {
-        this.photo = photo;
+        this.nama_penduduk = nama_penduduk;
+        this.no_telpon = no_telpon;
     }
 
     public String getNik() {
@@ -46,44 +34,18 @@ public class DataUser {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getNama() {
-        return nama;
+        return nama_penduduk;
     }
     public void setNama(String nama) {
-        this.nama = nama;
-    }
-
-    public String getTtl() {
-        return ttl;
-    }
-    public void setTtl(String ttl) {
-        this.ttl = ttl;
-    }
-
-    public String getJenkel(){return jenkel;}
-    public void setJenkel(String jenkel){
-        this.jenkel = jenkel;
-    }
-
-    public String getAlamat() {
-        return alamat;
-    }
-    public void setAlamat(String alamat) {
-        this.alamat = alamat;
+        this.nama_penduduk = nama;
     }
 
     public String getNohp() {
-        return nohp;
+        return no_telpon;
     }
     public void setNohp(String nohp) {
-        this.nohp = nohp;
+        this.no_telpon = nohp;
     }
 
     public String getKey() {

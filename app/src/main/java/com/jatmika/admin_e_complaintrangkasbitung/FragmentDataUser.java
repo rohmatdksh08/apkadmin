@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +22,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.jatmika.admin_e_complaintrangkasbitung.API.API;
+import com.jatmika.admin_e_complaintrangkasbitung.API.APIUtility;
 import com.jatmika.admin_e_complaintrangkasbitung.Adapter.RecyclerAdapterDataUser;
 import com.jatmika.admin_e_complaintrangkasbitung.Model.DataUser;
+import com.jatmika.admin_e_complaintrangkasbitung.Model.Penduduk;
+import com.jatmika.admin_e_complaintrangkasbitung.SharePref.SharePref;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -41,6 +50,8 @@ public class FragmentDataUser extends Fragment implements RecyclerAdapterDataUse
     ValueEventListener mDBListener;
     List<DataUser> mDatas;
     TextView tvNoData;
+    API apiService;
+    SharePref sharePref;
 
     private void openDetailDataUser(String[] data){
         Intent intent = new Intent(getActivity(), DetailDataUserActivity.class);
@@ -78,43 +89,36 @@ public class FragmentDataUser extends Fragment implements RecyclerAdapterDataUse
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
 
-        mStorage = FirebaseStorage.getInstance();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("data_user");
+        apiService = APIUtility.getAPI();
+        sharePref = new SharePref(getActivity().getApplicationContext());
 
-        mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
+        apiService.getPengguna("Bearer "+sharePref.getTokenApi()).enqueue(new Callback<List<DataUser>>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    mDatas.clear();
-                    for (DataSnapshot mahasiswaSnapshot : dataSnapshot.getChildren()) {
-                        DataUser upload = mahasiswaSnapshot.getValue(DataUser.class);
-                        upload.setKey(mahasiswaSnapshot.getKey());
-                        mDatas.add(upload);
-                    }
-                    mAdapter.notifyDataSetChanged();
-                    tvNoData.setVisibility(View.GONE);
-                } else {
-                    tvNoData.setVisibility(View.VISIBLE);
-                    tvNoData.setText("Tidak Ada Data");
+            public void onResponse(Call<List<DataUser>> call, Response<List<DataUser>> response) {
+                Log.i("error", response.toString());
+                for (DataUser dataUser : response.body()){
+                    mDatas.add(dataUser);
                 }
+                mAdapter.notifyDataSetChanged();
+                tvNoData.setVisibility(View.GONE);
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getActivity(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<List<DataUser>> call, Throwable t) {
+                Log.i("errorUser", t.toString());
             }
         });
+
 
         return view;
     }
 
     @Override
     public void onItemClick(int position) {
-        DataUser clickedMahasiswa = mDatas.get(position);
-        String[] mahasiswaData = {clickedMahasiswa.getPhoto(), clickedMahasiswa.getNik(), clickedMahasiswa.getEmail(),
-                clickedMahasiswa.getPassword(), clickedMahasiswa.getNama(), clickedMahasiswa.getTtl(), clickedMahasiswa.getJenkel(),
-                clickedMahasiswa.getAlamat(), clickedMahasiswa.getNohp(), clickedMahasiswa.getKey()};
-
-        openDetailDataUser(mahasiswaData);
+//        DataUser clickedMahasiswa = mDatas.get(position);
+//        String[] mahasiswaData = {clickedMahasiswa.getNik(), clickedMahasiswa.getEmail(),
+//              clickedMahasiswa.getNama(), clickedMahasiswa.getNohp(), clickedMahasiswa.getKey()};
+//
+//        openDetailDataUser(mahasiswaData);
     }
 }

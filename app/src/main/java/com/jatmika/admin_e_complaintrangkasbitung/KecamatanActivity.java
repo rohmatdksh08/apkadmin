@@ -21,7 +21,7 @@ public class KecamatanActivity extends AppCompatActivity {
     Animation fromright;
 
     CarouselView carouselView;
-    int[] sampleImages = {R.drawable.kecamatan1, R.drawable.kecamatan2, R.drawable.kecamatan3};
+    int[] sampleImages = {R.drawable.image_kecamatan, R.drawable.image_kecamatan, R.drawable.image_kecamatan};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

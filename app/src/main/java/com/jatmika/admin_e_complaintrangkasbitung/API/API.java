@@ -2,9 +2,11 @@ package com.jatmika.admin_e_complaintrangkasbitung.API;
 
 import com.jatmika.admin_e_complaintrangkasbitung.Model.Admin;
 import com.jatmika.admin_e_complaintrangkasbitung.Model.DataBerita;
+import com.jatmika.admin_e_complaintrangkasbitung.Model.DataUser;
 import com.jatmika.admin_e_complaintrangkasbitung.Model.Komentar;
 import com.jatmika.admin_e_complaintrangkasbitung.Model.Komplain;
 import com.jatmika.admin_e_complaintrangkasbitung.Model.Penduduk;
+import com.jatmika.admin_e_complaintrangkasbitung.Model.PersentaseKomplain;
 import com.jatmika.admin_e_complaintrangkasbitung.Model.TokenApi;
 
 import java.util.List;
@@ -59,4 +61,13 @@ public interface API {
     Call<ResponseBody> deleteBerita(@Header("Authorization") String token, @Path("id") String id);
     @POST("/api/logout")
     Call<ResponseBody> logout(@Header("Authorization") String token);
+
+    @DELETE("/api/penduduk/delete/{id}")
+    Call<ResponseBody> deletePenduduk(@Header("Authorization") String token, @Path("id") String id);
+
+    @GET("/api/pengguna")
+    Call<List<DataUser>> getPengguna(@Header("Authorization") String token);
+
+    @GET("/api/chart-komplain")
+    Call<List<PersentaseKomplain>> getPersentase(@Header("Authorization") String token);
 }

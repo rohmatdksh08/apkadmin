@@ -46,7 +46,7 @@ public class RecyclerAdapterKomplain extends RecyclerView.Adapter<RecyclerAdapte
         holder.namaTextView.setText(currentKomplain.getNama());
         holder.isiTextView.setText("''" +currentKomplain.getIsi()+ "''");
         String status = holder.setText(currentKomplain.getStatus());
-        String urlImage = "http://192.168.1.12:8000/uploads/"+currentKomplain.getFoto();
+        String urlImage = "https://api-rohmat.kosanbahari.xyz/uploads/"+currentKomplain.getFoto();
         if (status.equals("Menunggu Diproses")){
             holder.imgStatus.setImageResource(R.drawable.status_menunggu);
             holder.statusTextView.setTextColor(mContext.getResources().getColor(R.color.greenColor));

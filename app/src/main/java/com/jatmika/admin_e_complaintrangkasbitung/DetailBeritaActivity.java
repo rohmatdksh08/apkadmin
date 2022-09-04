@@ -121,7 +121,7 @@ public class DetailBeritaActivity extends AppCompatActivity {
         tanggalDetailTextView.setText(tanggal);
         penulisDetailTextView.setText(penulis);
         beritaDetailTextView.setText(berita);
-        String urlImage = "http://192.168.1.12:8000/uploads/"+image;
+        String urlImage = "https://api-rohmat.kosanbahari.xyz/uploads/"+image;
         Glide.with(this)
                 .load(urlImage)
                 .into(fotoDetailImageView);
@@ -133,7 +133,7 @@ public class DetailBeritaActivity extends AppCompatActivity {
                 View mView = getLayoutInflater().inflate(R.layout.show_image, null);
                 ImageView imageView = mView.findViewById(R.id.imageView);
                 TextView btnClose = mView.findViewById(R.id.btnClose);
-                String urlImage = "http://192.168.1.12:8000/uploads/"+image;
+                String urlImage = "https://api-rohmat.kosanbahari.xyz/uploads/"+image;
 
                 Glide.with(DetailBeritaActivity.this)
                         .load(urlImage)
@@ -153,7 +153,7 @@ public class DetailBeritaActivity extends AppCompatActivity {
         });
 
         mAuth = FirebaseAuth.getInstance();
-//        firebaseUser = mAuth.getCurrentUser();
+        firebaseUser = mAuth.getCurrentUser();
 
         btnTambahKomentar.setOnClickListener(new View.OnClickListener() {
             @Override
